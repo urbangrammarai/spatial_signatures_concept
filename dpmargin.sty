@@ -1,0 +1,99 @@
+% ========================================================================
+%% dpmargin.sty
+%% LaTeX2e style file for setting margins easily
+%% and switching between a4paper and letterpaper
+%% without changing the contents of each page
+%% by Diego Puga
+% ========================================================================
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{dpmargin}[1999/11/27]
+% ------------------------------------------------------------------------
+% Options
+% (read from \documentclass,
+% e.g. \documentclass[letterpaper]{article},
+% if unspecified will assume letterpaper)
+% ------------------------------------------------------------------------
+\newif\ifdpmrg@afouropt \dpmrg@afouroptfalse
+\DeclareOption{a4paper}{\dpmrg@afouropttrue}
+\DeclareOption{letterpaper}{\dpmrg@afouroptfalse}
+\ProcessOptions
+% ------------------------------------------------------------------------
+% Margins
+%
+% \marginstblr{t}{b}{l}{r}
+%   se%s top, bottom, left, and right margins
+%   to t, b, l, and r respectively
+% \afourmarginstblr{t}{b}{l}{r}
+%   sets top, bottom, left, and right margins
+%   to t, b, l, and r respectively
+%   for a4 sized paper;
+%   with letterpaper
+%   keeps \textheight \textwidth and \topmargin constant
+%   and adds 3mm to each side margin
+% \lettermarginstblr{t}{b}{l}{r}
+%   sets top, bottom, left, and right margins
+%   to t, b, l, and r respectively
+%   for letter sized paper;
+%   with a4paper
+%   keeps \textheight \textwidth and \topmargin constant
+%   and substracts 3mm from each side margin
+% ------------------------------------------------------------------------
+\newlength{\dpmrg@pageheight}
+\newlength{\dpmrg@pagewidth}
+\newlength{\dpmrg@margintop}
+\newlength{\dpmrg@marginbottom}
+\newlength{\dpmrg@marginleft}
+\newlength{\dpmrg@marginright}
+\ifdpmrg@afouropt% A4 is 297mm x 210mm
+  \setlength{\dpmrg@pageheight}{297mm}
+  \setlength{\dpmrg@pagewidth}{210mm}
+\else% letter is 11in x 8.5in (279mm x 216mm)
+  \setlength{\dpmrg@pageheight}{11in}
+  \setlength{\dpmrg@pagewidth}{8.5in}
+\fi
+\newcommand{\marginstblr}[4]{%
+  \setlength{\dpmrg@margintop}{#1}%
+  \setlength{\dpmrg@marginbottom}{#2}%
+  \setlength{\dpmrg@marginleft}{#3}%
+  \setlength{\dpmrg@marginright}{#4}%
+  \setlength{\textheight}{\dpmrg@pageheight}
+  \addtolength{\textheight}{-\dpmrg@margintop}
+  \addtolength{\textheight}{-\dpmrg@marginbottom}
+  \setlength{\textwidth}{\dpmrg@pagewidth}
+  \addtolength{\textwidth}{-\dpmrg@marginleft}
+  \addtolength{\textwidth}{-\dpmrg@marginright}
+  \setlength{\topmargin}{-1in}
+  \addtolength{\topmargin}{-\voffset}
+  \addtolength{\topmargin}{-\headheight}
+  \addtolength{\topmargin}{-\headsep}
+  \addtolength{\topmargin}{\dpmrg@margintop}
+  \setlength{\oddsidemargin}{-1in}
+  \addtolength{\oddsidemargin}{-\hoffset}
+  \addtolength{\oddsidemargin}{\dpmrg@marginleft}
+  \if@twoside
+    \setlength{\evensidemargin}{-1in}
+    \addtolength{\evensidemargin}{-\hoffset}
+    \addtolength{\evensidemargin}{\dpmrg@marginright}
+  \else
+    \setlength{\evensidemargin}{-1in}
+    \addtolength{\evensidemargin}{-\hoffset}
+    \addtolength{\evensidemargin}{\dpmrg@marginleft}
+  \fi
+}
+\newcommand{\afourmarginstblr}[4]{%
+  \setlength{\dpmrg@pageheight}{297mm}
+  \setlength{\dpmrg@pagewidth}{210mm}
+  \marginstblr{#1}{#2}{#3}{#4}
+  \ifdpmrg@afouropt\else
+    \addtolength{\oddsidemargin}{3mm}%
+    \addtolength{\evensidemargin}{3mm}%
+  \fi}
+\newcommand{\lettermarginstblr}[4]{%
+  \setlength{\dpmrg@pageheight}{11in}
+  \setlength{\dpmrg@pagewidth}{8.5in}
+  \marginstblr{#1}{#2}{#3}{#4}
+  \ifdpmrg@afouropt
+    \addtolength{\oddsidemargin}{-3mm}%
+    \addtolength{\evensidemargin}{-3mm}%
+  \fi}
+\endinput

@@ -1,0 +1,1503 @@
+% ========================================================================
+%% dpugatex.sty
+%% LaTeX2e style file for academic papers, seminars, and letters
+%% by Diego Puga
+%
+%% Options:
+%% a4paper        (adjusts settings for A4 paper)
+%% letterpaper    (adjusts settings for letter paper)
+%% alphasections  (subsection numbering with letters)
+%% arabicsections (subsection numbering with arabic numerals)
+%% subsectionsdot (dot after subsections)
+%% nopdfbookmarks (remove pdf bookmarks from pdf file)
+%% compatibility  (compatibility mode for pre-2008 files)
+%
+%  (a4paper or letterpaper are read in from the \documentclass options,
+%  and do not need to be specified again)
+% ========================================================================
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{dpugatex}[2014/01/22]
+%
+% ========================================================================
+% Package options
+% ========================================================================
+\newif\ifafour@dpopt \afour@dpoptfalse
+\newif\ifletter@dpopt \letter@dpopttrue
+\newif\ifpdftex@dpopt \pdftex@dpoptfalse
+\newif\iflandscape@dpopt \landscape@dpoptfalse
+\newif\ifarabicsections@dpopt \arabicsections@dpoptfalse
+\newif\ifsubsectionsdot@dpopt \subsectionsdot@dpoptfalse
+\newif\ifnopdfbookmarks@dpopt \nopdfbookmarks@dpoptfalse
+\newif\ifdisplay@dpopt \display@dpoptfalse
+\newif\ifcompatibility@dpopt \compatibility@dpoptfalse
+\DeclareOption{a4paper}{\afour@dpopttrue}
+\DeclareOption{letterpaper}{\letter@dpopttrue}
+\DeclareOption{pdftex}{\pdftex@dpopttrue}
+\DeclareOption{landscape}{\landscape@dpopttrue}
+\DeclareOption{arabicsections}{\arabicsections@dpopttrue}
+\DeclareOption{alphasections}{\arabicsections@dpoptfalse}
+\DeclareOption{subsectionsdot}{\subsectionsdot@dpopttrue}
+\DeclareOption{nopdfbookmarks}{\nopdfbookmarks@dpopttrue}
+\DeclareOption{display}{\display@dpopttrue}
+\DeclareOption{compatibility}{\compatibility@dpopttrue}
+\ProcessOptions
+%
+% ========================================================================
+% Required packages
+% ========================================================================
+% ------------------------------------------------------------------------
+% To be loaded always
+% ------------------------------------------------------------------------
+\RequirePackage{ifthen}
+\RequirePackage{xspace}
+\RequirePackage{color}
+\RequirePackage{graphicx}
+\RequirePackage{rotating}
+\RequirePackage{amsmath}
+\RequirePackage{amsfonts}
+\RequirePackage{amssymb}
+\RequirePackage{amsthm}
+\RequirePackage{icomma}
+\AtEndOfPackage{\@ifpackageloaded{hyperref}{}{% if not already loaded with other options
+  \RequirePackage[plainpages=false]{hyperref}}% needs to go at the end to work
+}
+\RequirePackage{dpmargin}
+% ------------------------------------------------------------------------
+% To be loaded depending on class
+% ------------------------------------------------------------------------
+% Allow for combined customizations for articles and books
+% Introduced 2008/01/04 to avoid messing with unknown classes)
+\newif\ifarticleorbook@dp \articleorbook@dpfalse
+\@ifclassloaded{article}{\articleorbook@dptrue}{%
+  \@ifclassloaded{book}{\articleorbook@dptrue}{\articleorbook@dpfalse}}
+% Local options
+\newif\ifthisisdp@ \thisisdp@false
+\InputIfFileExists{dpcheck.cfg}{}{}
+%
+\@ifclassloaded{letter}{% for letters only
+  \RequirePackage[newcommands]{ragged2e}
+  \AtEndOfPackage{\ifthisisdp@\RequirePackage{dpletrhd}\fi}% to avoid margins override
+}{% for articles, books, seminar, and beamer
+  \RequirePackage{array}
+  \RequirePackage{dcolumn}
+  \RequirePackage{hhline}
+  \RequirePackage{booktabs}
+  % pdfsync package no longer loaded except in compatibility mode, 2012/12/07
+  \ifpdftex@dpopt\ifcompatibility@dpopt
+    \RequirePackage{pdfsync}
+  \fi\fi
+  \@ifclassloaded{beamer}{% for beamer only, added 2009/03/06
+    \RequirePackage{natbib}% aviod longnamesfirst due to overlays
+    \RequirePackage{bibentry}
+  }{% for articles, books and seminar
+    \RequirePackage[longnamesfirst]{natbib}
+    \AtEndOfPackage{\@ifpackageloaded{hyperref}{%
+      % call to hypcap removed 2009/03/02
+      %\RequirePackage[figure,table]{hypcap}% fix caption hyperlinks
+      %\RequirePackage[startotoc]{hypbmsec}% bookmarks for starred sections
+    }{}}
+  }
+  \@ifclassloaded{seminar}{% for seminar only
+    % call to semcolor removed 2004/08/11, since it calls pstricks, which calls xcolor,
+    % which breaks pdftex as c@lor@to@ps is undefined;
+    % this inserted a visible frame in all slides, so had to re-define \newslideframe{plain}
+    %\RequirePackage{semcolor}
+    \newslideframe{plain}{#1}
+    \RequirePackage{slidesec}
+    \RequirePackage{semlayer}
+    \input{seminar.bug}
+    \input{seminar.bg2}
+    % call to soul and texpower removed 2009/03/02
+    %\RequirePackage{soul}
+    %\RequirePackage{texpower}
+    % fixseminar removed 2004/04/21 due to excess magnification in landscape slides
+    % hpdftex.def was also edited
+    % fixseminar added again and edited copy of hpdftex.def removed 2004/06/23
+    % after pdftex bug fixed
+    \AtEndOfPackage{% must be loaded after hyperref
+      \RequirePackage{fixseminar}
+    }
+  }{}
+}
+%
+% ========================================================================
+% New commands for the preamble
+% ========================================================================
+% ------------------------------------------------------------------------
+% Hyphens, orphans, and widows
+%
+% To disable all word hyphenation use the command \nohyphens
+% To reduce word hyphenation, use \fewhyphens
+% To disable hyphenation for part of the text only, use the command
+% \nohyphenshere{text}
+% To eliminate orphans (last line of a paragraph alone on a page),
+% use the command \noorphans
+% To reduce number of orphans, use \feworphans
+% To eliminate widows (first line of a paragraph alone on a page),
+% use the command \nowidows
+% To reduce number of widows, use \fewwidows
+%
+% Note:
+%   Standard value for \clubpenalty and \widowpenalty is 150
+%   Standard value for \hyphenpenalty, \exhyphenpenalty is 50
+%   and \displaywidowpenalty is 50
+% ------------------------------------------------------------------------
+\newcommand{\nohyphens}{%
+  \hyphenpenalty=10000\exhyphenpenalty=10000\relax
+  \sloppy\hbadness=1600}
+\newcommand{\fewhyphens}{%
+  \hyphenpenalty=300\exhyphenpenalty=300\relax% used to be 1500
+  \sloppy\hbadness=1600}
+\newcommand{\usualhyphens}{%
+  \hyphenpenalty=50\exhyphenpenalty=50\relax}
+\newlanguage\langwohyphens
+\newcommand{\nohyphenshere}[1]{{\language\langwohyphens #1}}
+\newcommand{\noorphans}{\clubpenalty=10000}
+\newcommand{\feworphans}{\clubpenalty=3000}
+\newcommand{\usualorphans}{\clubpenalty=150}
+\newcommand{\nowidows}{\widowpenalty=10000}
+\newcommand{\fewwidows}{\widowpenalty=3000}
+\newcommand{\usualwidows}{\widowpenalty=150\displaywidowpenalty=50}
+% Default settings
+\fewhyphens
+\feworphans
+\fewwidows\displaywidowpenalty=25
+\allowdisplaybreaks[1]% allow but discourage page breaks in equations (see ams math doc)
+% ------------------------------------------------------------------------
+% Spacing commands
+% Based on setspace.sty
+%
+% 4 commands, \singlespacing, \onehalfspacing,
+% \doublespacing, and \fulldoublespacing,
+% are for use in the preamble to set the overall
+% spacing for the document
+% \setstretch{baselinestretch} can also be used
+%
+% 3 environments, singlespace, onehalfspace, and doublespace,
+% allow the spacing to be changed within the document.
+% The spacing environment, which takes one argument,
+% allows any other spacing (e.g., \begin{spacing}{2.5})
+%
+% \negsmallskip decreases line separation by smallskipamount
+% \negmedskip decreases line separation by medskipamount
+% \negbigskip decreases line separation by bigskipamount
+% ------------------------------------------------------------------------
+\newcommand{\negsmallskip}{\vspace{-1\smallskipamount}}
+\newcommand{\negmedskip}{\vspace{-1\medskipamount}}
+\newcommand{\negbigskip}{\vspace{-1\bigskipamount}}
+% Line space commands.
+\newcommand{\setstretch}[1]{%
+  \def\baselinestretch{#1}%
+  \@currsize
+}
+\newcommand{\SetSinglespace}[1]{%
+  \def\setspace@singlespace{#1}%
+}
+% Here's the default single line spacing value.
+\SetSinglespace{1}
+\newcommand{\singlespacing}{%
+  \setstretch {\setspace@singlespace}%  normally 1
+  \vskip \baselineskip  % Correction for coming into singlespace
+}
+\newcommand{\onehalfspacing}{%
+  \setstretch{1.25}%  default
+  \ifcase \@ptsize \relax % 10pt
+    \setstretch {1.25}%
+  \or % 11pt
+    \setstretch {1.213}%
+  \or % 12pt
+    \setstretch {1.241}%
+  \fi
+}
+\newcommand{\doublespacing}{%
+  \setstretch {1.667}%  default
+  \ifcase \@ptsize \relax % 10pt
+    \setstretch {1.667}%
+  \or % 11pt
+    \setstretch {1.618}%
+  \or % 12pt
+    \setstretch {1.655}%
+  \fi
+}
+\newcommand{\fulldoublespacing}{%
+  \setstretch {1.667}%  default
+  \def\bibspacing{\setstretch{1.667}}
+  \def\footnotespacing{1.667}
+  \def\tablespacing{1.667}
+  \ifcase \@ptsize \relax % 10pt
+    \setstretch {1.667}%
+    \def\bibspacing{\setstretch{1.667}}%
+    \def\footnotespacing{1.667}%
+    \def\tablespacing{1.667}%
+  \or % 11pt
+    \setstretch {1.618}%
+    \def\bibspacing{\setstretch{1.618}}%
+    \def\footnotespacing{1.618}%
+    \def\tablespacing{1.618}%
+  \or % 12pt
+    \setstretch {1.655}%
+    \def\bibspacing{\setstretch{1.655}}%
+    \def\footnotespacing{1.655}%
+    \def\tablespacing{1.655}%
+  \fi
+}
+% Line space environments.
+\newenvironment{singlespace}{%
+  \vskip \baselineskip
+  \setstretch {\setspace@singlespace}%
+  \vskip -\baselineskip
+}{%
+  \par
+}
+\newenvironment{singlespace*}{%
+  \setstretch {\setspace@singlespace}%
+  \vskip -\baselineskip
+}{%
+  \vskip -0.5\baselineskip
+}
+\newcommand{\restore@spacing}{%
+    \par
+    \vskip \parskip
+    \vskip \baselineskip
+  \endgroup
+  \vskip -\parskip
+  \vskip -\baselineskip
+}
+\newenvironment{spacing}[1]{%
+  \par
+  \begingroup
+    \setstretch {#1}%
+}{%
+  \restore@spacing
+}
+% one and a half spacing is 1.5 x pt size
+\newenvironment{onehalfspace}{%
+  \begingroup
+    \onehalfspacing
+}{%
+  \restore@spacing
+}
+% double spacing is 2 x pt size
+\newenvironment{doublespace}{%
+  \begingroup
+    \doublespacing
+}{%
+  \restore@spacing
+}
+%
+% ========================================================================
+% New commands for the body
+% ========================================================================
+% ------------------------------------------------------------------------
+% New commands for acronyms
+% Based on acronym.sty,
+% by Tobias Oetiker [oetiker@ee.ethz.ch]
+%
+% \acronymdef{acronym_initials}{description} can be placed anywhere in
+%   the document to define an acronym to be used
+%
+% \acronym{acronym_initials} produces description (acronym)
+%   if the description has not appeared in the document before,
+%   and acronym only if it has
+%   -- in both cases with the acronym in small caps
+%
+% \acronymac{acronym_initials} forces the acronym only, even
+%   if the description has not appeared in the document before
+%
+% \acronymboth{acronym_initials} forces description (acronym), even
+%   if the description has appeared in the document before
+%
+% \acronymdesc{acronym_initials} produces the description only
+% ------------------------------------------------------------------------
+\newcommand{\newacronym}[2]{\expandafter\gdef\csname fn@#1\endcsname{#2}}
+\newcommand{\acronymdef}[2]{
+\newacronym{#1}{#2}%
+\write\@auxout{\string\newacronym{#1}{#2}}%
+}
+\newcommand{\acronymac}[1]{%
+\expandafter\ifx\csname fn@#1\endcsname\relax%
+ \textbf{\MakeUppercase{\textup{#1!}}}%
+ \PackageWarning{dpugatex}{Acronym `#1' is not defined}%
+ \expandafter\gdef\csname fn@#1\endcsname{%
+ \textbf{\MakeUppercase{\textup{#1!}}}}
+\else%
+ \textsc{\MakeLowercase{#1}}%
+\fi}
+\newcommand{\acronymboth}[1]{%
+  \expandafter\ifx\csname ac@#1\endcsname\relax%
+  {\csname fn@#1\endcsname{} (\textsc{\MakeLowercase{%
+  \acronymac{#1}}})}%
+ \expandafter\gdef\csname ac@#1\endcsname{x}%
+\else%
+ {\csname fn@#1\endcsname{} (\textsc{\MakeLowercase{%
+  \acronymac{#1}}})}%
+\fi}
+\newcommand{\acronymdesc}[1]{%
+  \expandafter\ifx\csname ac@#1\endcsname\relax%
+  {\csname fn@#1\endcsname{}}%
+ \expandafter\gdef\csname ac@#1\endcsname{x}%
+\else%
+ {\csname fn@#1\endcsname{}}%
+\fi}
+\newcommand{\acronym}[1]{%
+\expandafter\ifx\csname ac@#1\endcsname\relax%
+ \acronymboth{#1}%
+ \expandafter\gdef\csname ac@#1\endcsname{x}%
+\else%
+ \acronymac{#1}%
+\fi}
+% ------------------------------------------------------------------------
+% \enumerateroman, alternative to \enumerate with roman item numbering
+% ------------------------------------------------------------------------
+\newenvironment{enumerateroman}{%
+  \renewcommand\theenumi{\@roman\c@enumi}%
+  \renewcommand\labelenumi{(\theenumi)}%
+  \begin{enumerate}%
+}{%
+  \end{enumerate}%
+  \renewcommand\theenumi{\@arabic\c@enumi}%
+  \renewcommand\labelenumi{\theenumi.}%
+}
+% ------------------------------------------------------------------------
+% url's and e-mails
+%
+% \urlhref{http://host.domain} formats the url in the text
+% and creates a hyperlink via the hyperref package
+% \emailhref{user@host.domain} formats the e-mail in the text
+% and creates a hyperlink via the hyperref package
+% ------------------------------------------------------------------------
+\AtEndOfPackage{
+  \@ifpackageloaded{hyperref}{\@ifpackageloaded{url}{%
+    \newcommand{\urlhref}[1]{\url{#1}}%
+    \newcommand{\emailhref}[1]{\href{mailto:#1}{\texttt{#1}}}%
+  }{}}{}%
+}
+% ------------------------------------------------------------------------
+% clevertabbing environment as an alternative to tabbing
+%
+% Allows text after a tab to be split across lines
+% Usage:
+% \begin{clevertabbing}{\textwidth}{text by which to set first `column' width}
+% \end{clevertabbing}
+% ------------------------------------------------------------------------
+\newlength\prevcolwidth@ctab%
+\newlength\thiscolwidth@ctab%
+\newenvironment{clevertabbing}[2]{%
+  \setlength\thiscolwidth@ctab{#1}%
+  \settowidth{\prevcolwidth@ctab}{#2}
+  \addtolength\thiscolwidth@ctab{-1\prevcolwidth@ctab}%
+  \noindent\begin{tabbing}%
+  #2\=\kill%
+}{%
+  \end{tabbing}
+}
+\newcommand{\ctabpar}[1]{\>\parbox[t]{\thiscolwidth@ctab}{#1}}
+\newcommand{\ctabflpar}[1]{\>\parbox[t]{\thiscolwidth@ctab}{\raggedright #1}}
+% ------------------------------------------------------------------------
+% Extra math alphabets
+% ------------------------------------------------------------------------
+\newcommand{\mathsc}[1]{\text{\textsc{#1}}}
+% ------------------------------------------------------------------------
+% Theorem default (plain) style redefinition
+%
+% 1 change with respect to amsthm.sty: no dot after theorem head
+% ------------------------------------------------------------------------
+\newtheoremstyle{plain}
+  {}%                     Space above, empty = `usual value'
+  {}%                     Space below
+  {\itshape}%   Body font
+  {}%                     Indent amount (empty = no indent, \parindent = para indent)
+  {\bfseries}%  Thm head font
+  {}%                     Punctuation after thm head
+  { }%                    Space after thm head: " " = normal interword space;\newline = linebreak
+  {}%                     Thm head spec
+% ------------------------------------------------------------------------
+% New theorem styles
+% ------------------------------------------------------------------------
+% prime theorem style
+\newtheoremstyle{prime}
+  {}%                     Space above, empty = `usual value'
+  {}%                     Space below
+  {\itshape}%   Body font
+  {}%                     Indent amount (empty = no indent, \parindent = para indent)
+  {\bfseries}%  Thm head font
+  {}%                     Punctuation after thm head
+  { }%                    Space after thm head: " " = normal interword space;\newline = linebreak
+  {\bfseries\itshape #1\ #2$\mathbf{^\prime}$ (#3)}% Thm head spec
+% noteonly theorem style
+\newtheoremstyle{noteonly}% name
+  {}%
+  {}%
+  {\itshape}%
+  {}%
+  {\bfseries}%
+  {}%
+  { }%
+  {\bfseries #3}%
+% ------------------------------------------------------------------------
+% \newsubtheorem
+%
+% \newtheorem{subtheoremtype}{subtheoremname}[theoremtype]
+% defines a theorem for use within a theorem
+% with subtheorem head in italics,
+% the optional description in normal weight,
+% and numbering of the form theorem#.subtheorem#
+% ------------------------------------------------------------------------
+% subthm theorem style
+\newtheoremstyle{subthm}% name
+  {}%
+  {}%
+  {\itshape}%
+  {}%
+  {\bfseries\itshape}%
+  {}%
+  { }%
+  {\bfseries\itshape #1\ #2 \normalfont\itshape(#3)}%
+% \newsubtheorem definition
+\def\newsubtheorem#1#2[#3]{%
+  \theoremstyle{subthm}% \@xthm def unchanged from amsthm.sty
+  \ifx\relax#3\relax
+    \newcounter{#1}%
+  \else
+    \newcounter{#1}[#3]%
+    \@xp\xdef\csname the#1\endcsname{\@xp\@nx\csname the#3\endcsname
+      \@thmcountersep\@thmcounter{#1}}%
+  \fi
+  \toks@{#2}%
+  \@xp\xdef\csname#1\endcsname{%
+    \@nx\@thm{%
+      \let\@nx\thm@swap
+        \if S\thm@swap\@nx\@firstoftwo\else\@nx\@gobble\fi
+      \@xp\@nx\csname th@\the\thm@style\endcsname}%
+      {#1}{\the\toks@}}%
+  \theoremstyle{plain}}
+% ------------------------------------------------------------------------
+% Proof environment
+% ------------------------------------------------------------------------
+\renewenvironment{proof}[1][\proofname]{\par
+  \pushQED{\qed}%
+  \normalfont \topsep6\p@\@plus6\p@\relax
+  \trivlist
+  % Next 3 lines modified with respect to amsthm.sty
+  \item[\hskip\labelsep
+        \itshape\bfseries
+    #1]\ignorespaces
+}{%
+  \popQED\endtrivlist\@endpefalse
+}
+% ========================================================================
+% Additional symbols
+% ========================================================================
+% ------------------------------------------------------------------------
+% Euro support
+% Based on europs.sty,
+% by Joern Clausen [joern@techfak.uni-bielfeld.de],
+%
+% \eurosf   selects Euro sans serif (Sans)
+% \eurorm   selects Euro roman (Serif)
+% \eurott   selects Euro typewriter (Mono)
+% \euro     selects one of the above, depending on the current context
+% \EURO     selects Euro sans serif upshape medium weight,
+%           independent of context (the "official" Euro symbol).
+% \Euro     same as \EURO
+% ------------------------------------------------------------------------
+\newcommand{\eurorm}{{\fontencoding{U}\fontfamily{zpeu}\selectfont E}}
+\newcommand{\eurosf}{{\fontencoding{U}\fontfamily{zpeus}\selectfont E}}
+\newcommand{\eurott}{{\fontencoding{U}\fontfamily{zpeut}\selectfont E}}
+\AtBeginDocument{\providecommand{\ppleuro}{{\fontencoding{U}\fontfamily{fplm}\selectfont \char160}}}
+\AtBeginDocument{\providecommand{\pmyeuro}{{\fontencoding{TS1}\fontfamily{pmy}\selectfont \char"BF}}}
+\AtBeginDocument{\providecommand{\bopeuro}{{\fontencoding{TS1}\fontfamily{bop}\selectfont \char"BF}}}
+\newcommand{\euro}{%
+  \ifthenelse{\equal{\f@family}{pplj}}%
+    {\ppleuro}%
+    {%
+      \ifthenelse{\equal{\f@family}{pplx}}%
+      {\ppleuro}%
+      {%
+        \ifthenelse{\equal{\f@family}{ppl}}%
+        {\ppleuro}%
+        {%
+          \ifthenelse{\equal{\f@family}{pmy}}%
+          {\pmyeuro}%
+          {%
+            \ifthenelse{\equal{\f@family}{ptkj}}%
+            {\ptkeuro}%
+            {%
+              \ifthenelse{\equal{\f@family}{bop}}%
+              {\eurorm}%
+              {%
+                \ifthenelse{\equal{\f@family}{\rmdefault}}%
+                {\eurorm}%
+                {%
+                  \ifthenelse{\equal{\f@family}{\ttdefault}}%
+                  {\eurott}%
+                  {\eurosf}%
+              }}}}}}}}
+\newcommand{\Euro}{{\usefont{U}{zpeus}{m}{n} E}}
+\newcommand{\EURO}{\Euro}
+% ------------------------------------------------------------------------
+% Various text symbols and common expressions
+%
+% \tbc for [[To Be Completed!]]
+% \orda for ª
+% \ordo for °
+% \NA for NA within tabular environment
+% \RnD for R&D
+% \tsrf for tsrf logo
+% \UofT for UofT
+% ------------------------------------------------------------------------
+\newcommand\tbc{ \textbf{[[To Be Completed!]]\xspace}}
+\newcommand\orda{\textordfeminine\xspace}
+\newcommand\ordo{\textordmasculine\xspace}
+\newcommand\RnD{\textsc{r}\&\textsc{d}\xspace}
+\newcommand\NA{\multicolumn{1}{c}{\textsc{na}}}
+\newcommand\TSRF{%
+          {\rm t{\sc s}\kern-0.05em\lower 0.1ex\hbox{r{\sc f}}}\xspace}
+\newcommand\tsrf{\TSRF}
+\newcommand\UofT{\textsc{u}of\textsc{t}\xspace}
+
+% ========================================================================
+% New commands specific to the article, book, and seminar classes
+% ========================================================================
+% ------------------------------------------------------------------------
+% Re-define titlepage environment
+% following titlepage from article.cls (lines 432-445)
+% so that the title page is assigned page # 0,
+% items on the page are single spaced and footnotes have a different format
+% ------------------------------------------------------------------------
+\@ifclassloaded{article}{
+  \renewenvironment{titlepage}{%
+    % first 6 lines from article.cls
+    \if@twocolumn
+      \@restonecoltrue\onecolumn
+    \else
+      \@restonecolfalse\newpage
+    \fi
+    \thispagestyle{empty}%
+    \setcounter{page}{0}
+    \newlength{\old@parindent}
+    \setlength{\old@parindent}{\parindent}
+    \setlength{\parindent}{0mm}
+    \renewcommand\footnoterule{\rule{0mm}{0mm}}
+    \renewcommand{\thefootnote}{\fnsymbol{footnote}}
+    \renewcommand{\thempfootnote}{\fnsymbol{mpfootnote}}
+    \providecommand\pdfTitleBookmark{}
+    \let\old@footnotespacing\footnotespacing
+    \def\footnotespacing{\setspace@singlespace}
+    \begin{singlespacing}
+    \pdfTitleBookmark
+  }{%
+    \end{singlespacing}
+    \setlength{\parindent}{\old@parindent}
+    \let\footnotespacing\old@footnotespacing
+    \setcounter{footnote}{0}
+    \renewcommand\footnoterule{%
+      \kern-3\p@
+      \hrule\@width 40mm
+      \kern2.6\p@}
+    \renewcommand{\thefootnote}{\arabic{footnote}}
+    \renewcommand{\thempfootnote}{\alph{mpfootnote}}
+    % remaining 4 lines from article.cls
+    \if@restonecol\twocolumn \else \newpage \fi
+    \if@twoside\else
+       \setcounter{page}\@ne
+    \fi}
+}{}
+
+% ------------------------------------------------------------------------
+% Replace standard environments for titlepage
+% ------------------------------------------------------------------------
+\@ifclassloaded{article}{
+  \newlength{\abstractmargin}
+  \setlength{\abstractmargin}{22.5mm}
+  \renewenvironment{abstract}{
+    \begin{list}{}{%
+      \setlength{\leftmargin}{\abstractmargin}%
+      \setlength{\rightmargin}{\abstractmargin}}
+    \item \textsc{\abstractname}: \hskip .25em
+  }{
+    \end{list}
+  }
+}{}
+% ------------------------------------------------------------------------
+% Command for seminar
+% ------------------------------------------------------------------------
+\@ifclassloaded{seminar}{
+  \ifdisplay@dpopt
+    \newcommand{\onlydisplay}[1]{#1}
+    \newcommand{\onlyprint}[1]{}
+  \else
+    \newcommand{\onlydisplay}[1]{}
+    \newcommand{\onlyprint}[1]{#1}
+  \fi
+}{}
+%
+% ========================================================================
+% New commands and settings specific to the letter class
+% ========================================================================
+% ------------------------------------------------------------------------
+% Redefinition of \opening and \closing from letter.cls to be raggedright
+% and for \opening to include optional Re:, defined with
+% \letterRe[OptionalAlternativeToRe:]{recontents}
+% ------------------------------------------------------------------------
+\@ifclassloaded{letter}{%
+  \def\ReName{Re:}% 3 lines adapted from envlab.sty for Re
+  \let\@recontents\@empty
+  \newcommand*{\letterRe}[2][\ReName]{\def\@recontents{#1 #2}}%
+  \renewcommand*{\opening}[1]{\ifx\@empty\fromaddress
+    \thispagestyle{firstpage}%
+      {\raggedright\@date\par}%
+    \else% home address
+      \thispagestyle{empty}%
+      {\raggedright\fromaddress\par\vspace{2\parskip}%
+      \@date\par}%
+    \fi
+    \vspace{\parskip}%
+    {\raggedright\singlespacing \toname \\ \toaddress \par}% added \singlespacing
+    \ifx\@empty\@recontents\relax% 4 lines adapted from envlab.sty for Re
+    \else
+       {\vspace{\parskip}\raggedright\@recontents\par}%
+    \fi
+    \vspace{2\parskip}%
+    #1\par\nobreak}%
+  \renewcommand{\closing}[1]{\par\nobreak\vspace{\parskip}%
+    \stopbreaks
+    \noindent
+    \raggedright
+      \ignorespaces #1\\[6\medskipamount]%
+      \ifx\@empty\fromsig
+        \fromname
+      \else \fromsig \fi\strut%
+     \par}
+}{}
+%
+% ========================================================================
+% Layout and format
+% ========================================================================
+% ------------------------------------------------------------------------
+% Margins (this relies on dpmargins.sty)
+%         (top, bottom, left, right)
+% a4:     20mm, 38mm, 22mm, 22mm
+% letter: 20mm, 20mm, 25mm, 25mm
+% ------------------------------------------------------------------------
+\ifarticleorbook@dp\afourmarginstblr{20mm}{38mm}{22mm}{22mm}\fi
+\@ifclassloaded{letter}{\afourmarginstblr{20mm}{38mm}{22mm}{22mm}}{}
+% alternative raw setting of margins (1in = 72pt = 25.4mm)
+%\setlength{\textheight}{239mm}% 297mm[a4 paper height] - 20mm[top margin] - 38mm[bottom margin]
+%\setlength{\textwidth}{166mm}% 210mm[a4 paper width] - (2 x 22mm[side margins a4])
+%\setlength{\topmargin}{-18.4mm}% -1in - 12pt[\headheight] - 25pt[\headsep] + 20mm[top margin]
+%\setlength{\oddsidemargin}{-0.4mm}% -1in + 25mm[margins letter]
+%\setlength{\evensidemargin}{-0.4mm}% -1in + 25mm[margins letter]
+%\ifafour@dpopt% A4 is 210mm wide, letter is 216mm wide
+%  \addtolength{\oddsidemargin}{-3mm}%
+%  \addtolength{\evensidemargin}{-3mm}%
+%\else\fi
+% ------------------------------------------------------------------------
+% Landscape fix for dvips
+% ------------------------------------------------------------------------
+\ifpdftex@dpopt\else
+  \iflandscape@dpopt
+    \ifletter@dpopt
+      \AtBeginDocument{\special{papersize=11in,8.5in}}
+    \else
+      \ifafour@dpopt
+        \AtBeginDocument{\special{papersize=297mm,210mm}}
+      \else\fi
+    \fi
+  \else\fi
+\fi
+% ------------------------------------------------------------------------
+% Other page dimensions
+% ------------------------------------------------------------------------
+\@ifclassloaded{letter}{% for letters only
+  \setlength{\parindent}{0mm}
+}{\ifarticleorbook@dp\setlength{\parindent}{5mm}\fi}% for articles only
+% ------------------------------------------------------------------------
+% Spacing
+% ------------------------------------------------------------------------
+\def\bibspacing{\singlespacing}
+\def\footnotespacing{\setspace@singlespace}
+\def\tablespacing{\setspace@singlespace}
+% ------------------------------------------------------------------------
+% Change format of today's date to day# Month year#
+% ------------------------------------------------------------------------
+\AtBeginDocument{% as of 2008/01/14 babel overrides \today redefinition
+  \@ifpackageloaded{babel}{}{%
+  \renewcommand{\today}
+    {\number\day \space \ifcase\month\or January\or February\or
+    March\or April\or May\or June\or July\or August\or September\or
+    October\or November\or December\fi \space \number\year}
+  }
+}
+% ------------------------------------------------------------------------
+% Footnotes
+%
+% Modifies footnotes
+% to be single-spaced, and have a separation line 40mm wide,
+% increases separation between footnotes by 25%,
+% and separates slightly footnote text from the footnote number;
+% also prevents splitting of footnotes across pages by increasing
+% \interfootnotelinepenalty from 100 to 10000
+%
+% \footnoteruleoff turns off the rule in footnotes
+% \footnoteruleon turns it back on
+% \footnotestyle sets singlespacing, footnotesize and \dp@footnotefontadj
+% ------------------------------------------------------------------------
+\interfootnotelinepenalty=10000
+\renewcommand\footnoterule{%
+  \kern-3\p@
+  \hrule\@width 40mm
+  \kern2.6\p@}
+\newlength\oldfootnotesep
+\setlength\oldfootnotesep{\footnotesep}
+\setlength\footnotesep{1.25\oldfootnotesep}
+\renewcommand\@makefntext[1]{%
+    \parindent 1em%
+    \noindent
+    \hb@xt@1.8em{\hss\@makefnmark}#1}
+\newcommand\footnoteruleoff{%
+  \renewcommand\footnoterule{}%
+  \advance\skip\footins 4\p@\@plus2\p@\relax%
+  \skip\@mpfootins = \skip\footins
+}
+\newcommand\footnoteruleon{%
+  \renewcommand\footnoterule{%
+    \kern-3\p@
+    \hrule\@width 40mm
+    \kern2.6\p@}
+  \skip\footins=\bigskipamount%
+  \skip\@mpfootins = \skip\footins
+}
+% \dp@footnotefontadj (used with osf fonts) allows for font adjustments
+\def\dp@footnotefontadj{}
+\newcommand{\footnotestyle}{\setstretch{\setspace@singlespace}%
+  \dp@footnotefontadj\footnotesize}
+% Modification of footnotetext from latex.ltx
+\long\def\@footnotetext#1{\insert\footins{%
+    % single-spacing modification
+    \def\baselinestretch{\footnotespacing}%
+    % \dp@footnotefontadj modification
+    \reset@font\dp@footnotefontadj\footnotesize
+    \interlinepenalty\interfootnotelinepenalty
+    \splittopskip\footnotesep
+    \splitmaxdepth \dp\strutbox \floatingpenalty \@MM
+    \hsize\columnwidth \@parboxrestore
+    \protected@edef\@currentlabel{%
+       \csname p@footnote\endcsname\@thefnmark
+    }%
+    \color@begingroup
+      \@makefntext{%
+        \rule\z@\footnotesep\ignorespaces#1\@finalstrut\strutbox}%
+    \color@endgroup}}%
+% Modification of mpfootnotetext from latex.ltx
+\long\def\@mpfootnotetext#1{%
+  \global\setbox\@mpfootins\vbox{%
+    \unvbox\@mpfootins
+    % single-spacing modification
+    \def\baselinestretch{\footnotespacing}%
+    % \dp@footnotefontadj modification
+    \reset@font\dp@footnotefontadj\footnotesize
+    \hsize\columnwidth
+    \@parboxrestore
+    \protected@edef\@currentlabel
+         {\csname p@mpfootnote\endcsname\@thefnmark}%
+    \color@begingroup
+      \@makefntext{%
+        \rule\z@\footnotesep\ignorespaces#1\@finalstrut\strutbox}%
+    \color@endgroup}}
+% ------------------------------------------------------------------------
+% Sections, etc.
+% ------------------------------------------------------------------------
+\ifarticleorbook@dp% for articles and books only
+  % Counter styles for sections, etc.
+  \ifarabicsections@dpopt
+  \def\thesection {\arabic{section}}
+  \def\thesubsection {\thesection.\arabic{subsection}}
+  \def\thesubsubsection {\thesubsection.\arabic{subsubsection}}
+  \else
+  \def\thesection {\arabic{section}}
+  \def\thesubsection {\textup{\Alph{subsection}}}
+  \def\thesubsubsection {\alph{subsubsection}}
+  \fi
+  \def\theparagraph {\thesubsubsection.\arabic{paragraph}}
+  \def\thesubparagraph {\theparagraph.\arabic{subparagraph}}%
+\def\@sect#1#2#3#4#5#6[#7]#8{%
+  \ifnum #2>\c@secnumdepth
+    \let\@svsec\@empty
+  \else% modification is in the following 9 lines
+      \ifnum #2=\@ne\refstepcounter{#1}%
+         \protected@edef\@svsec{\csname the#1\endcsname.\hskip .5em }
+      \else\refstepcounter{#1}%
+        \ifsubsectionsdot@dpopt
+          \protected@edef\@svsec{\csname the#1\endcsname.\hskip .5em }
+        \else
+          \protected@edef\@svsec{\csname the#1\endcsname\hskip .5em }
+        \fi
+      \fi
+  \fi
+  \@tempskipa #5\relax
+  \ifdim \@tempskipa>\z@
+    \begingroup
+      #6{%
+        \@hangfrom{\hskip #3\relax\@svsec}%
+          \interlinepenalty \@M #8\@@par}%
+    \endgroup
+    \csname #1mark\endcsname{#7}%
+    \addcontentsline{toc}{#1}{%
+      \ifnum #2>\c@secnumdepth \else
+        \protect\numberline{\csname the#1\endcsname}%
+      \fi
+      #7}%
+  \else
+    \def\@svsechd{%
+      #6{\hskip #3\relax
+      \@svsec #8}%
+      \csname #1mark\endcsname{#7}%
+      \addcontentsline{toc}{#1}{%
+        \ifnum #2>\c@secnumdepth \else
+          \protect\numberline{\csname the#1\endcsname}%
+        \fi
+        #7}}%
+  \fi
+  \@xsect{#5}}
+  \renewcommand\section{\@startsection{section}{1}{\z@}%
+                                     {-3.5ex \@plus -1ex \@minus -.2ex}%
+                                     {2.3ex \@plus.2ex}%
+                                     {\normalfont\large\bfseries}}
+  \renewcommand\subsection{\@startsection{subsection}{2}{\z@}%
+                                       {-3.25ex\@plus -1ex \@minus -.2ex}%
+                                       {1.5ex \@plus .2ex}%
+                                       {\normalfont\normalsize\itshape\bfseries}}
+  \renewcommand\subsubsection{\@startsection{subsubsection}{3}{\z@}%
+                                       {-3.25ex\@plus -1ex \@minus -.2ex}%
+                                       {1.5ex \@plus .2ex}%
+                                       {\normalfont\normalsize\itshape}}
+  \renewcommand\paragraph{\@startsection{paragraph}{4}{\z@}%
+                                      {3.25ex \@plus1ex \@minus.2ex}%
+                                      {-1em}%
+                                      {\normalfont\normalsize\itshape}}
+  \renewcommand\subparagraph{\@startsection{subparagraph}{5}{\parindent}%
+                                         {3.25ex \@plus1ex \@minus .2ex}%
+                                         {-1em}%
+                                        {\normalfont\normalsize\itshape}}%
+\fi
+\@ifclassloaded{book}{
+  \renewcommand\chaptername{}
+%  \def\thechapter{\textsc{\roman{chapter}}}
+}{}
+\@ifclassloaded{seminar}{
+  % Define \slidesubsubheading
+  \newcounter{slidesubsubsection}
+  \def\thesubsubslidesection{\theslidesection.\arabic{subslidesection}.\arabic{subsubslidesection}}
+  \def\slidesubsubheading{\@dblarg\slide@subsubheading}
+  \def\slide@subsubheading[#1]#2{%
+    \refstepcounter{slidesubsubsection}%
+    \addtocontents{los}{\protect\l@subsubslide
+      {\the\c@slidesubsubsection}{\ignorespaces#1}{\@SCTR}}%
+    \def\@tempa{#2}%
+    \ifx\@tempa\@empty\else
+      {\edef\@currentlabel{\csname p@slidesubsubsection\endcsname
+        \theslidesubsubsection}\makeslidesubsubheading{#2}}%
+    \fi
+    \gdef\theslidesubsubheading{#1}%
+  }
+  \def\makeslidesubsubheading#1{%
+    \begin{center}\large\itshape #1\end{center}}%
+  % Re-define \slideheading and \slidesubheading
+  \ifpdftex@dpopt
+    \def\makeslideheading#1{%
+      \begin{center}\large\bfseries\underline{#1}\end{center}}%
+    \def\makeslidesubheading#1{%
+      \begin{center}\large\bfseries #1\end{center}}%
+  \else
+    \def\makeslideheading#1{%
+      \begin{center}\large\bfseries\underline{#1}\end{center}\negbigskip}%
+    \def\makeslidesubheading#1{%
+      \begin{center}\large\bfseries #1\end{center}\negbigskip}%
+  \fi
+}{}
+% ------------------------------------------------------------------------
+% Tables
+%
+% Redefine table environments
+% to be single-spaced
+% to have no footnote rule in minipage footnotes
+% plus osf font adjustments
+% ------------------------------------------------------------------------
+% Redefinition of float from latex.ltx
+\let\latex@xfloat=\@xfloat
+\def\@xfloat #1[#2]{%
+  \latex@xfloat #1[#2]%
+  % single-space modification
+  \def\baselinestretch{\tablespacing}%
+  \normalsize
+}
+\newif\ifdp@wasosf \dp@wasosffalse
+\newif\ifdp@osf \dp@osffalse
+\newcommand{\dp@begintablestuff}{\footnoteruleoff}
+\newcommand{\dp@endtablestuff}{\footnoteruleon}
+\AtBeginDocument{%
+    \providecommand{\osfrmdefault}{}
+    \providecommand{\noosfrmdefault}{}
+    \providecommand{\osfusefont}{}
+    \newcommand{\dp@begintable}{\dp@begintablestuff%
+      \ifdp@osf\dp@wasosftrue\noosfrmdefault%
+      \renewcommand{\dp@footnotefontadj}{\osfusefont}
+      \fi}% no osf inside tables
+    \newcommand{\dp@endtable}{\ifdp@wasosf\osfrmdefault\dp@wasosffalse
+    \renewcommand{\dp@footnotefontadj}{}%
+    \fi\dp@endtablestuff}
+}
+% Allow for classes that do not define table and table* environments
+% (introduced 2008/01/04 instead of enclosing all the table stuff
+% with \@ifclassloaded{letter}{}{...})
+\@ifundefined{table}{\newenvironment{table}{}{}}{}
+\@ifundefined{table*}{\newenvironment{table*}{}{}}{}
+% From article.cls and book.cls
+% changed \@float to \dp@float, \@dblfloat to \dp@dblfloat,
+% and added \dp@endtable and \dp@pdfbookmark@table
+\providecommand{\dp@pdfbookmark@table}{}
+\renewenvironment{table}
+  {\dp@float{table}}
+  {\dp@endtable\dp@pdfbookmark@table\end@float}
+\renewenvironment{table*}
+  {\dp@dblfloat{table}}
+  {\dp@endtable\end@dblfloat}
+% From rotating package
+% changed \@rotfloat to \dp@rotfloat, \@rotdblfloat to \dp@rotdblfloat,
+% and added \dp@endtable
+%\renewenvironment{sidewaystable}
+%  {\dp@rotfloat{table}}
+%  {\dp@endtable\end@rotfloat}
+%\renewenvironment{sidewaystable*}
+%  {\@rotdblfloat{table}}
+%  {\dp@endtable\end@rotdblfloat}
+% From latex.ltx
+% copied definitions of \@float, \@dblfloat, \@dbflt and \@xdblfloat;
+% changed \@float to \dp@float, \@dblfloat to \dp@dblfloat,
+% \@dbflt to \dp@dbflt, \@xdblfloat to \dp@xdblfloat and \@xfloat to \dp@xfloat;
+% and defined \dp@xfloat to insert \dp@begintable before \@xfloat
+\def\dp@float#1{%
+  \@ifnextchar[%
+    {\dp@xfloat{#1}}%
+    {\edef\reserved@a{\noexpand\dp@xfloat{#1}[\csname fps@#1\endcsname]}%
+     \reserved@a}}
+\def\dp@dblfloat{%
+  \if@twocolumn\let\reserved@a\dp@dbflt\else\let\reserved@a\dp@float\fi
+  \reserved@a}
+\def\dp@dbflt#1{\@ifnextchar[{\dp@xdblfloat{#1}}{\dp@xdblfloat{#1}[tp]}}
+\def\dp@xdblfloat#1[#2]{%
+  \dp@xfloat{#1}[#2]\hsize\textwidth\linewidth\textwidth}
+\def\dp@xfloat #1[#2]{%
+  \dp@begintable
+  \@xfloat{#1}[#2]
+}
+% From rotating package
+% copied definitions of \@rotfloat, \@xrotfloat, \@rotdblfloat,
+% \@rotdbflt and \@rotxdblfloat;
+% changed \@rotfloat to \dp@rotfloat, \@xrotfloat to \dp@xrotfloat,
+% \@float to \dp@float, \@rotdblfloat to \dp@rotdblfloat,
+% \@rotdbflt to \dp@rotdbflt, \@rotxdblfloat to \dp@rotxdblfloat
+\def\dp@rotfloat#1{%
+  \@ifnextchar%
+    {\dp@xrotfloat{#1}}%
+    {\edef\@tempa{\noexpand\dp@xrotfloat{#1}[\csname fps@#1\endcsname]}\@tempa}%
+}
+\def\dp@xrotfloat#1[#2]{%
+  \dp@float{#1}[#2]%
+  \begin{lrbox}\rot@float@box
+  \begin{minipage}\textheight
+}
+\def\dp@rotdblfloat{%
+  \if@twocolumn\let\reserved@a\dp@rotdbflt\else\let\reserved@a\dp@rotfloat\fi
+  \reserved@a}
+\def\dp@rotdbflt#1{\@ifnextchar{\dp@rotxdblfloat{#1}}{\dp@rotxdblfloat{#1}[tp]}}
+\def\dp@rotxdblfloat#1[#2]{%
+  \hsize\textwidth\linewidth\textwidth
+  \dp@float{#1}[#2]%
+  \begin{lrbox}\rot@float@box
+  \begin{minipage}\textheight
+}
+
+
+\def\sidewaysfigure{\@rotfloat{figure}}
+\let\endsidewaysfigure\end@rotfloat
+\def\sidewaystable{\@rotfloat{table}}
+\let\endsidewaystable\end@rotfloat
+
+
+% ------------------------------------------------------------------------
+% Appendices
+%
+% Redefinition of the \appendix command from article.cls (lines 484--487)
+% so that the section counter takes the form Appendix Letter,
+% the equation counter is reset to 1, and equations numbered (A #)
+%
+% Alternatively a command \appendixcounters is defined similarly,
+% but Appendix Letter becomes the section heading
+% without Appendix becoming part of the section counter
+% and equations are numbered (Letter.#),
+% where Letter is the section counter for the appendices,
+%
+% Alternatively (obsolete, left for backwards compatibility)
+% a command appendices is defined similarly,
+% with equations numbered (Letter #),
+% where Letter is the section counter for the appendices
+% but Appendix becomes part of the counter, which is not standard
+% ------------------------------------------------------------------------
+\@ifclassloaded{article}{%
+  \newcommand\dp@appeqnnum{\renewcommand\theequation{A~\@arabic\c@equation}}
+  \newcommand\dp@appseqnnum{\renewcommand\theequation{\@Alph\c@section~\@arabic\c@equation}}
+  % \dp@appsdoteqnnum command added 2011/09/08
+  \newcommand\dp@appsdoteqnnum{\renewcommand\theequation{\@Alph\c@section.\@arabic\c@equation}}
+  \AtBeginDocument{%
+    \@ifpackageloaded{dpppl}{%
+      \ifdpppl@osfeqnnum
+        \renewcommand\dp@appeqnnum{%
+          \renewcommand\theequation{\textsc{a}\@arabic\c@equation}}
+        \renewcommand\dp@appseqnnum{%
+          \renewcommand\theequation{\textsc{\@alph\c@section}\@arabic\c@equation}}
+        \renewcommand\dp@appsdoteqnnum{%
+          \renewcommand\theequation{\textsc{\@alph\c@section}.\@arabic\c@equation}}
+      \fi
+    }{}
+  }
+  % 13 previous lines moved below \@ifclassloaded{article} 2008/01/04
+  \newcommand{\dp@appcommon}{%
+    \renewcommand\theHsection{\Alph{section}}% hyperref fix
+    \setcounter{section}{0}%
+    \setcounter{subsection}{0}%
+    \newcounter{dp@preappsections}%
+    \setcounter{dp@preappsections}{\value{section}}%
+    \newcounter{dp@preappequations}%
+    \setcounter{dp@preappequations}{\value{equation}}%
+    \newcounter{dp@preapptables}%
+    \setcounter{dp@preapptables}{\value{table}}%
+    \newcounter{dp@preappfigures}%
+    \setcounter{dp@preappfigures}{\value{figure}}%
+    }
+  \renewcommand\appendix{\par
+    \dp@appcommon
+    \dp@appeqnnum
+    \setcounter{equation}{0}
+    \renewcommand\thesection{Appendix \@Alph\c@section}%
+    \renewcommand\thesubsection{\@Alph\c@subsection.}}
+  \newcommand\appendices{\par
+    \dp@appcommon
+    \dp@appseqnnum
+    \renewcommand\thesection{Appendix \@Alph\c@section}%
+    \renewcommand\thesubsection{\@Alph\c@subsection.}
+    \renewcommand{\section}{\setcounter{equation}{0}\@startsection {section}{1}{\z@}%
+                                       {-3.5ex \@plus -1ex \@minus -.2ex}%
+                                       {2.3ex \@plus.2ex}%
+                                       {\reset@font\large\bfseries}}}%
+  % \appendixcounters and next 2 commands added 2011/09/08
+  \def\dp@app@startsection#1#2#3#4#5#6{%
+    \if@noskipsec \leavevmode \fi
+    \par
+    \@tempskipa #4\relax
+    \@afterindenttrue
+    \ifdim \@tempskipa <\z@
+      \@tempskipa -\@tempskipa \@afterindentfalse
+    \fi
+    \if@nobreak
+      \everypar{}%
+    \else
+      \addpenalty\@secpenalty\addvspace\@tempskipa
+    \fi
+    \@ifstar
+      {\@ssect{#3}{#4}{#5}{#6}}%
+      {\@dblarg{\dp@app@sect{#1}{#2}{#3}{#4}{#5}{#6}}}}
+  \def\dp@app@sect#1#2#3#4#5#6[#7]#8{%
+    \ifnum #2>\c@secnumdepth
+      \let\@svsec\@empty
+    \else%
+        \ifnum #2=\@ne\refstepcounter{#1}% modification is in the following line
+           \protected@edef\@svsec{Appendix \csname the#1\endcsname.\hskip .5em }
+        \else\refstepcounter{#1}%
+          \ifsubsectionsdot@dpopt
+            \protected@edef\@svsec{\csname the#1\endcsname.\hskip .5em }
+          \else
+            \protected@edef\@svsec{\csname the#1\endcsname\hskip .5em }
+          \fi
+        \fi
+    \fi
+    \@tempskipa #5\relax
+    \ifdim \@tempskipa>\z@
+      \begingroup
+        #6{%
+          \@hangfrom{\hskip #3\relax\@svsec}%
+            \interlinepenalty \@M #8\@@par}%
+      \endgroup
+      \csname #1mark\endcsname{#7}%
+      \addcontentsline{toc}{#1}{%
+        \ifnum #2>\c@secnumdepth \else
+          \protect\numberline{\csname the#1\endcsname}%
+        \fi
+        #7}%
+    \else
+      \def\@svsechd{%
+        #6{\hskip #3\relax
+        \@svsec #8}%
+        \csname #1mark\endcsname{#7}%
+        \addcontentsline{toc}{#1}{%
+          \ifnum #2>\c@secnumdepth \else
+            \protect\numberline{\csname the#1\endcsname}%
+          \fi
+          #7}}%
+    \fi
+    \@xsect{#5}}
+  \newcommand\appendixcounters{\par
+    \dp@appcommon
+    \dp@appsdoteqnnum
+    \renewcommand\thetable{\@Alph\c@section.\@arabic\c@table}
+    \renewcommand\thefigure{\@Alph\c@section.\@arabic\c@figure}
+    \renewcommand\thesection{\@Alph\c@section}%
+    \renewcommand\thesubsection{\@Alph\c@subsection.}
+    \renewcommand{\section}{\setcounter{equation}{0}\setcounter{table}{0}\setcounter{figure}{0}\dp@app@startsection {section}{1}{\z@}%
+                                       {-3.5ex \@plus -1ex \@minus -.2ex}%
+                                       {2.3ex \@plus.2ex}%
+                                       {\reset@font\large\bfseries}}
+  }%
+  \newcommand\restoreapp{%
+    \renewcommand\theHsection{\arabic{section}}% hyperref fix
+    \setcounter{section}{\value{dp@preappsections}}
+    \setcounter{equation}{\value{dp@preappequations}}
+    \renewcommand{\section}{\@startsection {section}{1}{\z@}%
+                                 {-3.5ex \@plus -1ex \@minus -.2ex}%
+                                 {2.3ex \@plus.2ex}%
+                                 {\reset@font\large\bfseries}}%
+  }
+}{}% Code for Appendix in books taken out 2001/03/23
+% ========================================================================
+% Modifications, options and commands for other packages
+% ========================================================================
+% ------------------------------------------------------------------------
+% Options and commands for hyperref.sty
+%
+% \pdfOpenDefaultView sets pdf open view to default mode
+% \pdfOpenFitWidth (defined above) sets pdf open view to fit width
+% \pdfBlankDocInfo makes all fields under Document Info blank
+% \pdfHideBookmarks does not show the bookmarks upon opening
+%
+% See hyperref manual for further details
+% ------------------------------------------------------------------------
+\AtEndOfPackage{\@ifpackageloaded{hyperref}{%
+  \hypersetup{breaklinks=true,colorlinks=true,%
+    pdfhighlight={/O},%
+    linkcolor=black,anchorcolor=black,citecolor=black,%
+    filecolor=black,menucolor=black,%
+    urlcolor=black,pdfcreator={LaTeX}}%
+  \ifpdftex@dpopt
+    \hypersetup{pdfproducer={pdfLaTeX}}%
+  \else
+    \hypersetup{pdfproducer={dvips + distiller}}%
+  \fi
+  \@ifclassloaded{seminar}{% for seminar
+    \hypersetup{pdfpagemode=UseNone,%pdfpagemode=FullScreen,
+        bookmarksopen=true,bookmarksopenlevel=2,%
+        bookmarksnumbered=true}%
+    \def\toclevel@figure{1}
+    \def\toclevel@table{1}
+  }{\@ifclassloaded{article}{% for article
+      \hypersetup{pdfpagemode=UseNone,%
+        bookmarksopen=true,bookmarksopenlevel=2,%
+        bookmarksnumbered=true}%
+    }{%
+      \hypersetup{pdfpagemode=UseNone}% for other classes
+    }%
+  }
+  \newcommand{\pdfOpenDefaultView}{%
+    \hypersetup{pdfstartview={XYZ null null null}}}%
+  \newcommand{\pdfOpenFitWidth}{%
+    \ifafour@dpopt
+      \hypersetup{pdfstartview={FitH 846}}\par
+    \else
+      \ifletter@dpopt
+        \hypersetup{pdfstartview={FitH 796}}\par% 11inx72pt/in+4pt
+      \fi
+    \fi}%
+  \newcommand{\pdfBlankDocInfo}{%
+    \AtBeginDocument{%
+      \hypersetup{pdfcreator={},pdfproducer={},%
+        pdftitle={},pdfauthor={},pdfkeywords={}}}}%
+  \newcommand{\pdfHideBookmarks}{\hypersetup{pdfpagemode=None}}%
+  \newcommand{\pdfShowBookmarks}{\hypersetup{pdfpagemode=UseOutlines}}%
+  \providecommand{\pdfTitleBookmark}{}
+  \renewcommand{\pdfTitleBookmark}{\ifthenelse{\equal{\@pdftitle}{}}{}{\phantomsection\addcontentsline{toc}{part}{\@pdftitle}}}
+  % Option to remove pdf bookmarks (based on nohyperref.sty)
+  \ifnopdfbookmarks@dpopt
+    %\let\hyper@@anchor\@gobble
+    \def\hyper@link#1#2#3{#3}%
+    \let\hyper@anchorstart\@gobble
+    \let\hyper@anchorend\@empty
+    \let\hyper@linkstart\@gobbletwo
+    \let\hyper@linkend\@empty
+    \def\hyper@linkurl#1#2{#1}%
+    \def\hyper@linkfile#1#2#3{#1}%
+    %\let\pdfbookmark\@undefined
+    %\newcommand\pdfbookmark[3][]{}
+    \let\phantomsection\@empty
+    \let\hyperlink\@gobble
+    \let\hypertarget\@gobble
+  \fi }{}}
+% ------------------------------------------------------------------------
+% Change to hypcap.sty
+%
+% Make bookmark entry for tables and figures
+% ------------------------------------------------------------------------
+\AtEndOfPackage{%
+  \@ifpackageloaded{hypcap}{%
+    \renewcommand\theHfigure{\theHsection.\arabic{figure}}
+    \renewcommand\theHtable{\theHsection.\arabic{table}}
+    \def\toclevel@figure{2}
+    \def\toclevel@table{2}
+    \renewcommand{\dp@pdfbookmark@table}{\addcontentsline{toc}{table}{Table \thetable}}
+    \newcommand{\dp@pdfbookmark@figure}{\addcontentsline{toc}{figure}{Figure \thefigure}}
+    \renewenvironment{figure}% table already redefined above
+      {\@float{figure}}
+      {\dp@pdfbookmark@figure\end@float}
+  }{}
+}
+% ------------------------------------------------------------------------
+% Modifications to natbib.sty
+%
+% Make bibliography entries single-spaced
+% Separate multiple citations with a comma
+% ------------------------------------------------------------------------
+\@ifpackageloaded{natbib}{%
+  % Separate multiple citations with ,
+  %\bibpunct[, ]{(}{)}{;}{a}{,}{,}
+  \bibpunct[, ]{(}{)}{,}{a}{,}{,}
+  % Add hyperref pdf bookmark for References
+  \let\dp@bibsection@natbib\bibsection
+  \renewcommand\bibsection{\phantomsection\addcontentsline{toc}{section}{\refname}\dp@bibsection@natbib}
+  % if beamer class
+  \@ifclassloaded{beamer}{%
+    % use all author names in cites (make natbib cite commands always starred)
+    \renewcommand\NAT@citetp{\@ifnextchar[{\NAT@fulltrue\NAT@@citetp}{\NAT@fulltrue\NAT@@citetp[]}}
+    \renewcommand\NAT@cites{\@ifnextchar [{\NAT@fulltrue\NAT@@citetp}{\NAT@fulltrue%
+     \ifNAT@numbers\else
+     \NAT@swafalse
+     \fi
+    \NAT@@citetp[]}}
+    % do not count reference list in total number of frames (from appendixnumberbeamer.sty), added 2014/01/22
+    \let\beambib@dptotalframenumber\empty
+    \def\beambib@dpmainend{-1}
+    \def\unnumberedframes{
+      \setbeamertemplate{footline}[default]
+      \edef\beambib@dpmainend{\theframenumber}
+      \immediate\write\@auxout{\string\global\string\@namedef{mainendframenumber}{\beambib@dpmainend}}
+      \def\inserttotalframenumber{\beambib@dptotalframenumber}%
+      \setcounter{framenumber}{0}
+    }
+    \def\beambib@dppageatend{
+      \edef\beambib@dpend{\theframenumber}
+      \ifnum\beambib@dpmainend>0%
+      \immediate\write\@auxout{\string\global\string\@namedef{beambib@dptotalframenumber}{\beambib@dpend}}%
+      \immediate\write\@auxout{\string\global\string\@namedef{inserttotalframenumber}{\beambib@dpmainend}}%
+      \immediate\write\@auxout{\string\@writefile{nav}{\noexpand \headcommand {%
+        \noexpand \def\noexpand \inserttotalframenumber{\beambib@dpmainend}}}}%
+        \immediate\write\@auxout{\string\@writefile{nav}{\noexpand \headcommand {%
+        \noexpand \def\noexpand \beambib@dptotalframenumber{\beambib@dpend}}}}%
+      \else
+        \fi
+    }
+    \AtEndDocument{\beambib@dppageatend}
+    \renewenvironment{thebibliography}[1]{%
+     % single-spacing modification
+     \bibspacing\bibsection\parindent \z@\bibpreamble\bibfont\list
+       {\@biblabel{\arabic{NAT@ctr}}}{\@bibsetup{#1}%
+        \setcounter{NAT@ctr}{0}}%
+        % fix for beamer-natbib compatibility, added 2009/03/02 using \par, switched to empty 2014/01/22
+        \renewcommand\newblock{}
+        \sloppy\clubpenalty4000\widowpenalty4000
+        \sfcode`\.=1000\relax
+        \let\citeN\cite \let\shortcite\cite
+        \let\citeasnoun\cite
+     }{\def\@noitemerr{%
+      \PackageWarning{natbib}
+         {Empty `thebibliography' environment}}%
+      \endlist\vskip-\lastskip}
+  }{% for classes other than beamer
+    \renewenvironment{thebibliography}[1]{%
+     % single-spacing modification
+     \bibspacing\bibsection\parindent \z@\bibpreamble\bibfont\list
+       {\@biblabel{\arabic{NAT@ctr}}}{\@bibsetup{#1}%
+        \setcounter{NAT@ctr}{0}}%
+        \ifNAT@openbib
+          \renewcommand\newblock{\par}
+        \else
+          \renewcommand\newblock{\hskip .11em \@plus.33em \@minus.07em}%
+        \fi
+        \sloppy\clubpenalty4000\widowpenalty4000
+        \sfcode`\.=1000\relax
+        \let\citeN\cite \let\shortcite\cite
+        \let\citeasnoun\cite
+     }{\def\@noitemerr{%
+      \PackageWarning{natbib}
+         {Empty `thebibliography' environment}}%
+      \endlist\vskip-\lastskip}
+  }
+}
+% ------------------------------------------------------------------------
+% Settings for envlab.sty
+% ------------------------------------------------------------------------
+\AtEndOfPackage{%
+  \@ifpackageloaded{envlab}{%
+    %\setlength{\ToAddressWidth}{100mm}%
+    %\setlength{\FromAddressLeftMargin}{1in}%
+    \newcommand{\printenvelope}{\makelabels}
+  }{}%
+}
+% ------------------------------------------------------------------------
+% Portability settings for dpppl.sty
+% ------------------------------------------------------------------------
+\AtBeginDocument{%
+  \@ifpackageloaded{dpppl}{}{%
+    % Package mathpazo.sty provides \mathbold (italic bold maths)
+    % as an alternative to the standard \mathbf (upright bold maths)
+    % For portability, if package not loaded interpret \mathbold as \mathbf
+    \providecommand{\mathbold}[1]{\mathbf{#1}}%
+    % Ignore additional font weights if undefined
+    \providecommand{\textlt}[1]{#1}%
+    \providecommand{\textmb}[1]{#1}%
+    \providecommand{\textsb}[1]{\textbf{#1}}%
+    \providecommand{\texteb}[1]{#1}%
+  }%
+}
+% ========================================================================
+% Backwards compatibility
+% ========================================================================
+\ifcompatibility@dpopt
+\AtEndOfPackage{
+    % commands renamed
+    \newcommand{\dpurl}[1]{\urlhref{#1}}%
+    \newcommand{\dpemail}[1]{\emailhref{#1}}%
+}
+\@ifclassloaded{letter}{%
+}{%
+  % \tablehacks previously needed if table position specified
+  \providecommand{\tablehacks}{}
+  % commands deprecated by use of fancyhdr.sty:
+  %   \pagefooter{lhstext}{centretext}{rhstext} creates a footer in every page
+  %   \pageheader{lhstext}{centretext}{rhstext} creates a header in every page
+  \newcommand\pagefooter[3]{\setlength{\footskip}{10mm}%
+    \addtolength{\textheight}{-5mm}%
+    \AtBeginDocument{%
+      \def\@oddfoot{\rlap{#1}\hss{#2}\hss\llap{#3}}%
+      \def\@evenfoot{\rlap{#1}\hss{#2}\hss\llap{#3}}%
+    }}
+  \newcommand\pageheader[3]{%
+    \addtolength{\topmargin}{5mm}%
+    \addtolength{\textheight}{-5mm}%
+    \AtBeginDocument{%
+      \def\@oddhead{\rlap{#1}\hss{#2}\hss\llap{#3}}%
+      \def\@evenhead{\rlap{#1}\hss{#2}\hss\llap{#3}}%
+    }}
+  % old \newtheorem*
+  \def\newtheoremNC#1#2{%
+    {\@ynthmNC{#1}{#2}}}
+  \def\@ynthmNC#1#2{%
+      {\global\@namedef{#1}{\@thmNC{#1}{#2}}%
+       \global\@namedef{end#1}{\@endtheoremNC}}}
+  \def\@thmNC#1#2{%
+    \@ifnextchar[{\@ythmNC{#1}{#2}}{\@xthmNC{#1}{#2}}}
+  \def\@xthmNC#1#2#3{%
+    \@begintheoremNC{#2}{#3}\ignorespaces}
+  \def\@ythmNC#1#2[#3]#4{%
+    \@opargbegintheoremNC{#2}{#4}{#3}\ignorespaces}
+  \def\@opargbegintheoremNC#1#2#3{\trivlist
+    \item[\hskip \labelsep{\bfseries #1\ #2\ (#3)}]\itshape}
+  \def\@begintheoremNC#1#2{\trivlist
+     \item[\hskip \labelsep{\bfseries #1\ #2}]\itshape}
+  \def\@endtheoremNC{\endtrivlist}
+}
+\fi
+% ------------------------------------------------------------------------
+% Old commands for formatting title page
+%
+% A title page can be created as follows:
+%
+% \begin{tptitlepage} to begin
+%
+% \vspace*{distance} to adjust top margin - title separation (eg, 10mm)
+%
+% \tptitle{width}{title} for title
+%
+% \tpauth{name}{affiliation} for each author except the last one
+%
+% \tplastauth{name}{affiliation} for the last author
+%
+% \tpdate{date} for the date
+%
+% \tpabstract{width}{abstract} for the abstract
+%
+% \vspace*{distance} to adjust abstract - footer separation (eg, 5.3ex)
+%
+% \tpfoot{width}{keywords}{jelcodes}{addresses} for footer
+%
+% \vspace*{distance}  to adjust foot - bottom margin separation (eg, 10mm)
+%
+% \end{tptitlepage} to end
+% ------------------------------------------------------------------------
+\ifcompatibility@dpopt
+\@ifclassloaded{letter}{}{% for articles and books only
+    \newenvironment{tptitlepage}{\begin{titlepage}\begin{center}}{\end{center}\end{titlepage}}
+  \newcommand{\tptitle}[2]{%
+  \newlength\titlepagewidth
+    \setlength{\titlepagewidth}{#1}
+    \begin{minipage}{\titlepagewidth}
+    \begin{center}%
+    {\LARGE\textsb{#2}}\\[3.7ex]}
+  \newcommand{\tpauth}[2]{
+    {\Large\textsb{#1}}\\[1mm]%
+    {\large\textit{#2}}\\[2.65ex]}
+  \newcommand{\tplastauth}[2]{%
+    {\Large\textsb{#1}}\\[1mm]%
+    {\large\textit{#2}}\\[5.3ex]}
+  \newcommand{\tpdate}[1]{#1\\[3.7ex]
+    \end{center}}
+  \newcommand{\tpabstract}[2]{%
+    \setlength{\abstractmargin}{\titlepagewidth}
+    \addtolength{\abstractmargin}{-#1}
+    \setlength{\abstractmargin}{0.5\abstractmargin}
+    \begin{abstract}
+    #2
+    \end{abstract}
+  }
+  \newlength\old@tabcolsep%
+  \newcommand{\tpfoot}[4]{%
+    Key words: \hskip .25em #2\\
+    \textsc{jel} classification: \hskip .25em #3 \vspace*{-2.5ex}
+    \end{minipage}
+    \begin{minipage}{\titlepagewidth}
+    \vspace*{1.1ex}
+    \hypersetup{urlcolor=dp@customURLcolor}
+    \setlength\old@tabcolsep{\tabcolsep}
+    \setlength\tabcolsep{0mm}
+    #4
+    \hypersetup{urlcolor=black}
+    \setlength\tabcolsep{\old@tabcolsep}
+    \end{minipage}}%
+}
+\AtBeginDocument{\definecolor{dp@customURLcolor}{rgb}{.6,0,0}}
+\fi
+% ------------------------------------------------------------------------
+% Adaptation of titlepage for dpcepdp.sty
+% ------------------------------------------------------------------------
+\ifcompatibility@dpopt
+\AtBeginDocument{%
+  \@ifpackageloaded{dpcepdp}{%
+    \renewenvironment{tptitlepage}{}{\cepdpmaketitle}%
+    \renewcommand{\tptitle}[2]{\cepdptitle{#2}}%
+    \renewcommand{\tpabstract}[2]{\cepdpabstract{#2}}%
+    \renewcommand{\tpauth}[2]{}%
+    \renewcommand{\tplastauth}[2]{}%
+    \renewcommand{\tpdate}[1]{}%
+    \renewcommand{\tpfoot}[4]{}%
+  }{}
+}
+\fi
+%
+\endinput
