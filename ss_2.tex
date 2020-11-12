@@ -1,3 +1,75 @@
 \section{(Urban) form and function}
 \label{sec:lit}
 
+% Lit review backing up some of the claims made at the introduction (relevance etc)
+% -	Discussing
+% i.	Form: container
+% ii.	Function: content
+% iii.	The union between the two
+% -	A bit on measurement
+% i.	More thorough review of ways of measuring UFF
+
+
+% Form
+%% Form as a container
+% - backup the idea of form as a container (lit)
+% TODO: introduction of the section linking it back to the previous one
+
+%% Overview of attempts to describe form (time-based?, focus mostly on quant approaches)
+% - the focus on the description of form is old but just recently becoming data driven
+% - origins are in geography (Conzen and older) and architecture (Italians)
+% - first data-driven attempts
+% -- mention both morphometrics and remote sensing in parallel
+% -- Hillier, Porta, Batty
+% -- RS folks (land cover, urban/non-urban)
+Research studying urban form has a long tradition \citep{geddes1915cities, trewartha1934japanese}, whilst urban morphology as an independent area of research has established in the 1960s. It originated independently in geography \citep{conzen1960alnwick} and architecture \citep{muratori1959studi}, reflecting its inherently multi-disciplinary nature, which was later reinforced by the inclusion of socio-economic component in works of \cite{panerai1997formes}. The original methods are predominantly qualitative, and this tendency persists \citep{dibble2016urban}. First notable quantitative approaches date to the late 1980s and 1990s, reflecting advancements in computer science and newly available data capturing built environment. Two strains of research have emerged, one based on cartographic (vector) representation of the urban environment, assessing its boundaries \citep{batty1987}, street networks \citep{hillier1996, porta2006} and other elements \citep{pivo1993taxonomy}. The other one based on earth observation exploiting remotely sensed data to capture the change of footprints of urban areas \citep{howarth1983landsat} or classification of land cover \citep{europeanenvironmentagency1990}. 
+
+% - state of art
+% -- overview of work in both umm and rs (data availability and ML as enablers)
+% --- umm (Gil, Schirmer, Araldi, Berghauser Pont, Dibble) - focus on pure morphology
+The distinction between two approaches based on their primary source of data can also be applied to the recent literature reflecting the state of the art of characterization of urban form. A quantitative branch of urban morphology, or urban morphometrics, working predominantly with vector representation of elements of urban form has rapidly grown and offers an abundant selection of measurable characters describing different aspects of form \citep{fleischmann2020measuring}. Methods focusing on a single aspect \citep{porta2006} were replaced by others aiming to better reflect the complexity of urban form by combining multiple morphometric characters into a single model, often leading to a classification of some sort \citep{song2007}. The focus on classification is becoming more present in recent years, starting from small-scale studies classifying blocks and streets \citep{gil2012} to larger areas and higher granularity \citep{schirmer2015, araldi2019, bobkova2019, dibble2019origin, jochem2020}.
+
+% --- RS (Taubenbock, Jochem, Kuffer, LCZ, UST) - needs a bit of work to get relevant literature
+In parallel, advancements in remote sensing led to a range of classification frameworks based on various conceptualizations of the urban fabric. However, there is one significant difference between classification derived via morphometric characterization and the one of remote sensing origin. Where the former is mostly unsupervised \citep{araldi2019, schirmer2015}, the latter tends towards supervised techniques, capturing classes defined prior to the analysis \citep{ pauleit2000assessing}. Two most prominent classification models used as an input (i.e. training set) are Local Climate Zones \citep{stewart2012} defining ten built-form types and seven land cover types, used by \cite{koc2017mapping} or \cite{taubenbock2020}, and Urban Structural Type, a generic typology based on the notion of internal homogeneity of types \citep{lehner2019}. 
+
+% --- The ways of measuring UF (link to EPB)
+% --- touch on scale issue
+% QST: how detailed we want to have this? We may omit this.
+
+
+% Function
+%% Function as a content
+% - geodem literature and econ urban spatial structure about the structure of employment and econ activity
+% - Dani? (mostly geodem, economics etc.)
+% --- touch on scale issue
+
+
+% Union
+%% The union between form and function
+% - theory of the interconnectedness of the two
+% - form <-> function
+
+% - some papers combining both (from umm - Song, Bourdic, Serra, partially Alexiou, some resilience work; add other)
+% -- check Angel's papers
+% -- productivity/econ, 
+% -- efficiency
+% -- environmental, fiscal (OECD) argument
+% -- social integration and isolation
+% -- accessibility
+
+% --- touch on scale issue
+
+
+
+% Limits (gaps)
+% - limits of existing methods
+% -- where these methods can't deliver
+% --- detail, comprehensiveness, scalability (each lacks at least one)
+% --- data requirements (some are dependent on detailed data (Berghauser Pont, high-res RS))
+% ---- this could conclude with limits of open RS data "forcing" us to work with morphometrics -> link to the last part
+% ---- we need training data before we can go RS way - we need theory before
+% - limits of function
+% - limits of existing existing work combining two
+% opportunities to cross-pollinate to each other / hard for field to talk to each other
+% SpSig should be unifying (link back to this section from section 3)
+However, all the methods above have certain limits, mostly related to detail, comprehensiveness and scalability, lacking at least on them. Detail reflects spatial granularity of resulting classification, where more granular, i.e. more detailed, unit has the ability to capture smaller nuances of the urban environment and better reflect local characters or a place. Methods based on a unit which can be further subdivided \citep{dibble2019origin,jochem2020,araldi2019,gil2012}, therefore does not ensure internal homogeneity, can result in classes driven by the heterogeneity instead of the unit instead of the actual pattern of urban form. Comprehensiveness refers to the number of characters (variables) used in the classification procedure. Small sets of characters as in \cite{bobkova2019} or \cite{serra2018a} are prone to a selection bias and will less likely reflect the complexity of the urban environment. Finally, scalability reflects the ability of the proposed method to scale up to large extents of metropolitan areas or national-level studies. While some works illustrate such a potential \citep{jochem2020, schirmer2015,bobkova2019,araldi2019}, others which may overcome other issues are less likely to scale from their original limits \citep{dibble2019origin}. Furthermore, computational scalability can be limited by data availability. Methods dependent on a high amount of detailed vector data \citep{bobkova2019} can be hardly applied in other contexts where such input is not available.
