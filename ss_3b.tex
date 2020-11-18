@@ -26,8 +26,8 @@ subsume interesting variation and will hide features that are at the very
 heart of what we are trying to capture with spatial signatures.
 %% If done right --> a direct way to learn about geography
 Second, and conversely, we see adopting a meaningful unit a step of analysis
-itself. Rather than selecting an imperfect but existing unit to try to measure
-and characterise spatial signatures, delineating our own is an opportunity in
+itself. Rather than selecting an imperfect but existing unit to try to
+characterise spatial signatures, delineating our own is an opportunity in
 itself to learn about the nature of urban tissue and better understand issues
 about distribution and composition within urban areas.
 
@@ -60,11 +60,12 @@ of meaningful aggregation of space into spatial signatures.
 The existing literature does not appear to have a satisfying candidate to act
 as the building block of spatial signatures.
 %
-Without pretending to be exhaustive in the review, the vast majority of
-existing approaches to delineate meaningful units of urban form and function
-fall within one of the following three categories.
+Without attempting an exhaustive review, an endeavour beyond the scope of this
+article, the vast majority of existing approaches to delineate meaningful
+units of urban form and function fall within one of the following three
+categories.
 %% Administrative areas (cite Taubenbock 2020)
-The first group relies on administrative units such as postcodes, census geographies
+The first group relies on \textit{administrative} units such as postcodes, census geographies
 or municipal boundaries (e.g. \hl{XXXrefsXXX}).
 %
 These are practical as they usually are exhaustive of the geography and
@@ -76,16 +77,81 @@ Spain across several definitions and conclude they are fundamentally
 different; similarly, \cite{taubenbock2019new} rank world's largest cities
 based on their administrative size and on an alternative methods they proposed
 following built-up area, reaching similar conclusions and even going on to
-argue that ``\emph{administrative units obscure morphologic reality}''.
+argue that ``administrative units obscure morphologic reality''.
 %% Uniform grids (cite papers on imagery for squared grids and mention H3)
+An emerging body of work relies on granular, \textit{uniform grids} as the main unit of
+analysis. The building blocks may be squares (e.g. \citealp{jochem2020}) or
+hexagons, as in the case of the H3 spatial indexing system
+\citep{brodsky2018h3}. This choice is usually explicitly or implicitly
+motivated by the lack of a better, bespoke partitioning; the use of input data distributed
+in grids (e.g. satellite imagery); and the assumption that, with enough
+resolution, grids can be organically aggregated into units that match the
+processes of interest.
 %% Morphometric units --> MF to fill in here
+\hl{XXXmf to fill in here}
+A third approach followed mostly by the literature on urban morphology relies
+on the definition of morphometric units. These include street segments
+(XXXrefXXX), building footprints \citep{fleischmann2020morphological}, or constructs such as the
+sactuary area \citep{mehaffy2010urban,dibble2019origin}.
+\hl{XXX}
 % Not a criticism of these approaches, they're built for something else
+In all these cases, the choice of an administrative, uniform or morphometric
+choice is justified by the particular application in which it take place.
+However none of these approaches meet the three characteristics we require for
+spatial signatures.
+%
+Administrative boundaries are exhaustive but rarely indivisable or consistent
+when it comes to urban form, usually grouping very different types of fabric
+within a single area.
+%
+Uniform grids are also exhaustive but, similarly to administrative definition,
+the arbitrariety of their delineation with respect to urban form usually
+leaves them divisable and internatlly inconsistent.
+%
+Morphometric units are the most theoretically appealing since they are built
+to match the distribution of urban features and are usually granular enough to
+warrant internal consistency and indivisibility. Most of them are however not
+exhaustive as they are anchored to particular elements of the build
+environment, such as streets or building footprints, which do not provide full
+coverage.
 
 % Proposal: the ET
+We propose the development of a new spatial unit that we term the
+\textit{enclosed tessellation} (ET).
 %% One liner of what it is
+An ET is defined as:
+\newtheorem*{theorem}{}
+\begin{theorem}
+        The portion of space that results from growing a
+morphological tesselation within an
+enclosure delineated by a series of natural or built barriers identified from the
+literature on urban form, function and perception.
+\end{theorem}
 %% Two foundational blocks:
+Let us unpack this concept a bit further. The ET intersects two perspectives
+of how space can be understood and organised.
+%
 %%% Enclosures (delimitters)
+The first relies on the use of features that \textit{delimit} the landscape
+and partition it into smaller, fully enclosed portions. These include the
+road and street networks, but also others such as railways or rivers. In this context,
+each feature is conceptualised as a line and divides space into what falls
+within each of its sides.
+%
+There is a long tradition in the literature on urban morphology and perception
+that relies on variations of these delimiters to parse through the urban
+fabric. Prominent early examples include the edges and paths highlighted by
+\cite{lynch1960} as two of the five core elements that define legibility and
+imageability of a city; as well as the large amount of work inspired by this
+framework that continues to contribute new understandings of how the internal
+structure of cities is spatially arranged and perceived by humans (e.g.
+\citealp{filomena2019a}).
+
 %%% Building (subdelimitters) --> use morphometric lit to justify why buildings are so relevant
+The second perspective that ETs integrate is a vision of space that is organised
+around \textit{anchors}. In this view, space is best 
+ \citep{fleischmann2020morphological}
+%
 
 %% Process of delineation:
 %%% Gather all enclosing features (streets, rivers, railways, etc.)
@@ -95,3 +161,9 @@ argue that ``\emph{administrative units obscure morphologic reality}''.
 % [Build illustration in the description]
 
 % Why --> meets every requirement and extends the previous state-of-the-art
+The ET builds on recent morphometric advances and expands
+%
+To overcome existing limitations and provide the study of spatial signatures
+with a building block that is fit for purpose,
+
+
