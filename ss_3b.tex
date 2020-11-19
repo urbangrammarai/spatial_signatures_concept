@@ -127,19 +127,50 @@ morphological tesselation within an
 enclosure delineated by a series of natural or built barriers identified from the
 literature on urban form, function and perception.
 \end{theorem}
+%% Process of delineation:
+Let us unpack this concept a bit further. ETs result from the combination of
+three sequential steps.
+%%% Gather all enclosing features (streets, rivers, railways, etc.)
+First, they rely on a set of enclosing
+components: features of the landscape that divide it in smaller,
+fully delimited portions. The list of what should be counted as enclosing is
+informed by theory and, as we will see below, may vary by context. But, as an
+illustration, it includes elements such as the street network, rivers and
+coastlines, or railways.
+%%% Build enclosing geography
+Second, these enclosing features are integrated into a single set of
+boundaries that partition the geography into smaller areas. In some cases,
+they will be small, as with urban blocks in dense city
+centres; in others, they will be larger in size, as in rural sections with
+lower density of enclosing features. We call each of this fully delimited
+areas an enclosure.
+%%% subdivision it based on building presence
+Third, enclosures are further subdivided using a morphological tesselation.
+Originally proposed by \citep{fleischmann2020morphological}, morphological
+tesselations exhaustively partition space based on a set of building
+footprints, which are used in this context as anchors to draw catchment
+polygons.
+%%
+This process generates geographical boundaries for a given area that
+result in a new spatial unit. This unit provides full geographical coverage
+without any overlap.
+%
+Since the essence of the approach resides in growing a tessellation inside a
+set of enclosing features, we call the resulting areas ``enclosed
+tesselations''.
+
 %% Two foundational blocks:
-Let us unpack this concept a bit further. The ET intersects two perspectives
-of how space can be understood and organised.
+The ET intersects two perspectives of how space can be understood and organised.
 %
 %%% Enclosures (delimitters)
 The first relies on the use of features that \textit{delimit} the landscape
 and partition it into smaller, fully enclosed portions. These include the
-road and street networks, but also others such as railways or rivers. In this context,
-each feature is conceptualised as a line and divides space into what falls
-within each of its sides.
+road and street networks, but also others such as railways or rivers. Each
+feature is conceptualised as a line that acts as a boundary, dividing space
+into what falls within each of its sides.
 %
-There is a long tradition in the literature on urban morphology and perception
-that relies on variations of these delimiters to parse through the urban
+A long tradition in the literature on urban morphology and perception
+relies on variations of these delimiters to parse through the urban
 fabric. Prominent early examples include the edges and paths highlighted by
 \cite{lynch1960} as two of the five core elements that define legibility and
 imageability of a city; as well as the large amount of work inspired by this
@@ -148,22 +179,38 @@ structure of cities is spatially arranged and perceived by humans (e.g.
 \citealp{filomena2019a}).
 
 %%% Building (subdelimitters) --> use morphometric lit to justify why buildings are so relevant
-The second perspective that ETs integrate is a vision of space that is organised
-around \textit{anchors}. In this view, space is best 
- \citep{fleischmann2020morphological}
+The second perspective that ETs integrate is a vision organised
+around \textit{anchors}. In this view, space is best understood as the area in
+between a discrete set of relevant features. Unlike delimiters, these elements
+do not partition space per se, but instead act as origins to which the rest
+can be ``attached''.
 %
-
-%% Process of delineation:
-%%% Gather all enclosing features (streets, rivers, railways, etc.)
-%%% Build enclosing geography
-%%% subdivision it based on building presence
+The choice of anchors might vary by context but, in this case, the literature
+on morphometrics has extensive evidence to support the use of buildings as
+the primary feature (\hl{XXXmartin fill inXXX}).
+%
+Tesselations grow areas around a point of focus. In our case, we use the
+morphological tesselation \citep{fleischmann2020morphological}, which has been
+shown to be an efficient proxy for cadastral plots, the gold standard in
+morphometric analysis.
 
 % [Build illustration in the description]
 
 % Why --> meets every requirement and extends the previous state-of-the-art
-The ET builds on recent morphometric advances and expands
+The combination of delimiters and anchors as the parsers of space make ETs an
+ideal spatial unit to study spatial signatures.
 %
-To overcome existing limitations and provide the study of spatial signatures
-with a building block that is fit for purpose,
-
+Building on recent morphometric advances and integrating them with
+well-established understandings of how cities are read and perceived, the ETs
+meet the three requirements we outlined above.
+%
+They are indivisable in that a single ET will contain no delimiters, at
+most a single anchor, and potentially none.
+%
+They are also internally consistent because they are delineated as the area
+within the delimiters that contain at most one anchor.
+%
+And finally ETs are exhaustive in that every location within the area of
+interest is assigned to one and only one ET, providing full geographical
+coverage without any overlap.
 
