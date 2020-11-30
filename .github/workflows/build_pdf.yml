@@ -13,7 +13,8 @@ jobs:
       - name: Compile LaTeX document
         uses: xu-cheng/latex-action@v2
         with:
-          root_file: paper/spatial_signatures.tex
+          working_directory: paper
+          root_file: spatial_signatures.tex
 
       - name: Commit files
         run: |
