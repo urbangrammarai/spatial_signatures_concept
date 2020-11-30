@@ -13,13 +13,13 @@ jobs:
       - name: Compile LaTeX document
         uses: xu-cheng/latex-action@v2
         with:
-          root_file: spatial_signatures.tex
+          root_file: paper/spatial_signatures.tex
 
       - name: Commit files
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add spatial_signatures.pdf
+          git add paper/spatial_signatures.pdf
           git commit -m "Build PDF" -a --allow-empty
 
       - name: Push changes
