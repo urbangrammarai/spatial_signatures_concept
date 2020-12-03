@@ -66,7 +66,7 @@ units of urban form and function fall within one of the following three
 categories.
 %% Administrative areas (cite Taubenbock 2020)
 The first group relies on \textit{administrative} units such as postcodes, census geographies
-or municipal boundaries (e.g. \hl{XXXrefsXXX}).
+or municipal boundaries (e.g. \citealp{taubenbock2020}).
 %
 These are practical as they usually are exhaustive of the geography and
 readily available. However, their partition of space is usually driven by
@@ -88,12 +88,10 @@ in grids (e.g. satellite imagery); and the assumption that, with enough
 resolution, grids can be organically aggregated into units that match the
 processes of interest.
 %% Morphometric units --> MF to fill in here
-\hl{XXXmf to fill in here}
 A third approach followed mostly by the literature on urban morphology relies
 on the definition of morphometric units. These include street segments
-\citep{araldi2019}, building footprints \citep{fleischmann2020morphological}, or constructs such as the
+\citep{araldi2019}, plots \citep{bobkova2019}, building footprints \citep{schirmer2015}, or constructs such as the
 sactuary area \citep{mehaffy2010urban,dibble2019origin}.
-\hl{XXX}
 % Not a criticism of these approaches, they're built for something else
 In all these cases, the choice of an administrative, uniform or morphometric
 choice is justified by the particular application in which it take place.
@@ -113,14 +111,13 @@ to match the distribution of urban features and are usually granular enough to
 warrant internal consistency and indivisibility. Most of them are however not
 exhaustive as they are anchored to particular elements of the build
 environment, such as streets or building footprints, which do not provide full
-coverage.
-\martin{You could argue that plot is all indivisable, consistent and exhaustive entity.}
+coverage. Plots would theoretically meet all characteristics but can be problematic due to their variable definition leading to different geometric representations \citep{kropf2018plots}.
 
 % Proposal: the ET
 We propose the development of a new spatial unit that we term the
-\textit{enclosed tessellation} (ET).
+\textit{enclosed tessellation cell} (EC).
 %% One liner of what it is
-An ET is defined as:
+An EC is defined as:
 \newtheorem*{theorem}{}
 \begin{theorem}
         The portion of space that results from growing a
@@ -128,9 +125,8 @@ morphological tesselation within an
 enclosure delineated by a series of natural or built barriers identified from the
 literature on urban form, function and perception.
 \end{theorem}
-\martin{We should fix terminology. What is tesselaltion (mesh, process, unit) and what is cell etc.}
 %% Process of delineation:
-Let us unpack this concept a bit further. ETs result from the combination of
+Let us unpack this concept a bit further. ECs result from the combination of
 three sequential steps.
 %%% Gather all enclosing features (streets, rivers, railways, etc.)
 First, they rely on a set of enclosing
@@ -159,10 +155,10 @@ without any overlap.
 %
 Since the essence of the approach resides in growing a tessellation inside a
 set of enclosing features, we call the resulting areas ``enclosed
-tesselations''.
+tesselation cells''.
 
 %% Two foundational blocks:
-The ET intersects two perspectives of how space can be understood and organised.
+The enclosed tessellation (ET) intersects two perspectives of how space can be understood and organised.
 %
 %%% Enclosures (delimitters)
 The first relies on the use of features that \textit{delimit} the landscape
@@ -181,7 +177,7 @@ structure of cities is spatially arranged and perceived by humans (e.g.
 \citealp{filomena2019a}).
 
 %%% Building (subdelimitters) --> use morphometric lit to justify why buildings are so relevant
-The second perspective that ETs integrate is a vision organised
+The second perspective that ET integrate is a vision organised
 around \textit{anchors}. In this view, space is best understood as the area in
 between a discrete set of relevant features. Unlike delimiters, these elements
 do not partition space per se, but instead act as origins to which the rest
@@ -193,26 +189,26 @@ the primary feature \citep{hamaina2012a, usui2013estimation, schirmer2015}.
 %
 Tesselations grow areas around a point of focus. In our case, we use the
 morphological tesselation \citep{fleischmann2020morphological}, which has been
-shown to be an efficient proxy for cadastral plots, the gold standard in
-morphometric analysis.
+shown to be an efficient proxy for cadastral plots, the traditional smallest spatial unit in
+morophological analysis.
 
 % [Build illustration in the description]
 
 % Why --> meets every requirement and extends the previous state-of-the-art
-The combination of delimiters and anchors as the parsers of space make ETs an
+The combination of delimiters and anchors as the parsers of space make ECs an
 ideal spatial unit to study spatial signatures.
 %
 Building on recent morphometric advances and integrating them with
-well-established understandings of how cities are read and perceived, the ETs
+well-established understandings of how cities are read and perceived, the ECs
 meet the three requirements we outlined above.
 %
-They are indivisable in that a single ET will contain no delimiters, at
+They are indivisable in that a single EC will contain no delimiters, at
 most a single anchor, and potentially none.
 %
 They are also internally consistent because they are delineated as the area
 within the delimiters that contain at most one anchor.
 %
-And finally ETs are exhaustive in that every location within the area of
-interest is assigned to one and only one ET, providing full geographical
+And finally ECs are exhaustive in that every location within the area of
+interest is assigned to one and only one EC, providing full geographical
 coverage without any overlap.
 
