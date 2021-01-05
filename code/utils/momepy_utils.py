@@ -343,7 +343,7 @@ def centroid_corner(geom):
             else:
                 continue
     if not distances:  # circular buildings
-        from momepy.dimension import _longest_axis
+        from momepy.dimension import _circle_radius
 
         if geom.has_z:
             coords = [
@@ -351,7 +351,7 @@ def centroid_corner(geom):
             ]
         else:
             coords = geom.convex_hull.exterior.coords
-        return (_longest_axis(coords) / 2, 0)
+        return (_circle_radius(coords), 0)
 
     return (np.mean(distances), np.std(distances))
 

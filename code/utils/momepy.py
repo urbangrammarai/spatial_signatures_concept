@@ -1101,3 +1101,243 @@ class MeanInterbuildingDistance:
             except Exception:
                 results_list.append(np.nan)
         self.series = pd.Series(results_list, index=gdf.index)
+
+        
+class Corners:
+    """
+    Calculates number of corners of each object in given GeoDataFrame.
+
+    Uses only external shape (``shapely.geometry.exterior``), courtyards are not
+    included.
+
+    .. math::
+        \\sum corner
+
+    Parameters
+    ----------
+    gdf : GeoDataFrame
+        GeoDataFrame containing objects
+    verbose : bool (default True)
+        if True, shows progress bars in loops and indication of steps
+
+    Attributes
+    ----------
+    series : Series
+        Series containing resulting values
+    gdf : GeoDataFrame
+        original GeoDataFrame
+
+
+    Examples
+    --------
+    >>> buildings_df['corners'] = momepy.Corners(buildings_df).series
+    100%|██████████| 144/144 [00:00<00:00, 1042.15it/s]
+    >>> buildings_df.corners[0]
+    24
+
+
+    """
+
+    def __init__(self, gdf, verbose=True):
+        self.gdf = gdf
+
+        # define empty list for results
+        results_list = []
+
+        # calculate angle between points, return true or false if real corner
+        def _true_angle(a, b, c):
+            ba = a - b
+            bc = c - b
+
+            cosine_angle = np.dot(ba, bc) / (np.linalg.norm(ba) * np.linalg.norm(bc))
+            angle = np.arccos(cosine_angle)
+
+            # TODO: add arg to specify these values
+            if np.degrees(angle) <= 170:
+                return True
+            if np.degrees(angle) >= 190:
+                return True
+            return False
+
+        # fill new column with the value of area, iterating over rows one by one
+        for geom in tqdm(gdf.geometry, total=gdf.shape[0], disable=not verbose):
+            if geom.type == "Polygon":
+                corners = 0  # define empty variables
+                points = list(geom.exterior.coords)  # get points of a shape
+                stop = len(points) - 1  # define where to stop
+                for i in np.arange(
+                    len(points)
+                ):  # for every point, calculate angle and add 1 if True angle
+                    if i == 0:
+                        continue
+                    elif i == stop:
+                        a = np.asarray(points[i - 1])
+                        b = np.asarray(points[i])
+                        c = np.asarray(points[1])
+
+                        if _true_angle(a, b, c) is True:
+                            corners = corners + 1
+                        else:
+                            continue
+
+                    else:
+                        a = np.asarray(points[i - 1])
+                        b = np.asarray(points[i])
+                        c = np.asarray(points[i + 1])
+
+                        if _true_angle(a, b, c) is True:
+                            corners = corners + 1
+                        else:
+                            continue
+            elif geom.type == "MultiPolygon":
+                corners = 0  # define empty variables
+                for g in geom.geoms:
+                    points = list(g.exterior.coords)  # get points of a shape
+                    stop = len(points) - 1  # define where to stop
+                    for i in np.arange(
+                        len(points)
+                    ):  # for every point, calculate angle and add 1 if True angle
+                        if i == 0:
+                            continue
+                        elif i == stop:
+                            a = np.asarray(points[i - 1])
+                            b = np.asarray(points[i])
+                            c = np.asarray(points[1])
+
+                            if _true_angle(a, b, c) is True:
+                                corners = corners + 1
+                            else:
+                                continue
+
+                        else:
+                            a = np.asarray(points[i - 1])
+                            b = np.asarray(points[i])
+                            c = np.asarray(points[i + 1])
+
+                            if _true_angle(a, b, c) is True:
+                                corners = corners + 1
+                            else:
+                                continue                 
+            else:
+                corners = np.nan
+            
+            results_list.append(corners)
+
+
+        self.series = pd.Series(results_list, index=gdf.index)
+
+        
+class CentroidCorners:
+    """
+    Calculates mean distance centroid - corners and st. deviation.
+
+    .. math::
+        \\overline{x}=\\frac{1}{n}\\left(\\sum_{i=1}^{n} dist_{i}\\right);\\space \\mathrm{SD}=\\sqrt{\\frac{\\sum|x-\\overline{x}|^{2}}{n}}
+
+    Adapted from :cite:`schirmer2015` and :cite:`cimburova2017`.
+
+    Parameters
+    ----------
+    gdf : GeoDataFrame
+        GeoDataFrame containing objects
+    verbose : bool (default True)
+        if True, shows progress bars in loops and indication of steps
+
+    Attributes
+    ----------
+    mean : Series
+        Series containing mean distance values.
+    std : Series
+        Series containing standard deviation values.
+    gdf : GeoDataFrame
+        original GeoDataFrame
+
+    Examples
+    --------
+    >>> ccd = momepy.CentroidCorners(buildings_df)
+    100%|██████████| 144/144 [00:00<00:00, 846.58it/s]
+    >>> buildings_df['ccd_means'] = ccd.means
+    >>> buildings_df['ccd_stdev'] = ccd.std
+    >>> buildings_df['ccd_means'][0]
+    15.961531913184833
+    >>> buildings_df['ccd_stdev'][0]
+    3.0810634305400177
+    """
+
+    def __init__(self, gdf, verbose=True):
+        from momepy.shape import _circle_radius
+        
+        self.gdf = gdf
+        # define empty list for results
+        results_list = []
+        results_list_sd = []
+
+        # calculate angle between points, return true or false if real corner
+        def true_angle(a, b, c):
+            ba = a - b
+            bc = c - b
+
+            cosine_angle = np.dot(ba, bc) / (np.linalg.norm(ba) * np.linalg.norm(bc))
+            angle = np.arccos(cosine_angle)
+
+            if np.degrees(angle) <= 170:
+                return True
+            if np.degrees(angle) >= 190:
+                return True
+            return False
+
+        # iterating over rows one by one
+        for geom in tqdm(gdf.geometry, total=gdf.shape[0], disable=not verbose):
+            if geom.type == "Polygon":
+                distances = []  # set empty list of distances
+                centroid = geom.centroid  # define centroid
+                points = list(geom.exterior.coords)  # get points of a shape
+                stop = len(points) - 1  # define where to stop
+                for i in np.arange(
+                    len(points)
+                ):  # for every point, calculate angle and add 1 if True angle
+                    if i == 0:
+                        continue
+                    elif i == stop:
+                        a = np.asarray(points[i - 1])
+                        b = np.asarray(points[i])
+                        c = np.asarray(points[1])
+                        p = Point(points[i])
+
+                        if true_angle(a, b, c) is True:
+                            distance = centroid.distance(
+                                p
+                            )  # calculate distance point - centroid
+                            distances.append(distance)  # add distance to the list
+                        else:
+                            continue
+
+                    else:
+                        a = np.asarray(points[i - 1])
+                        b = np.asarray(points[i])
+                        c = np.asarray(points[i + 1])
+                        p = Point(points[i])
+
+                        if true_angle(a, b, c) is True:
+                            distance = centroid.distance(p)
+                            distances.append(distance)
+                        else:
+                            continue
+                if not distances:  # circular buildings
+                    if geom.has_z:
+                        coords = [
+                            (coo[0], coo[1]) for coo in geom.convex_hull.exterior.coords
+                        ]
+                    else:
+                        coords = geom.convex_hull.exterior.coords
+                    results_list.append(_circle_radius(coords))
+                    results_list_sd.append(0)
+                else:
+                    results_list.append(np.mean(distances))  # calculate mean
+                    results_list_sd.append(np.std(distances))  # calculate st.dev
+            else:
+                results_list.append(np.nan)
+                results_list_sd.append(np.nan)
+
+        self.mean = pd.Series(results_list, index=gdf.index)
+        self.std = pd.Series(results_list_sd, index=gdf.index)
