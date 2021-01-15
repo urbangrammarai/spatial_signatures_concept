@@ -691,7 +691,7 @@ class Tessellation:
             if n_chunks is None:
                 n_chunks = cpu_count()
             # initialize dask.series
-            ds = dd.from_array(splits, chunksize=len(splits) // n_chunks)
+            ds = dd.from_array(splits, chunksize=len(splits) // n_chunks - 1)
             # generate enclosed tessellation using dask
             new = (
                 ds.apply(
@@ -1341,3 +1341,89 @@ class CentroidCorners:
 
         self.mean = pd.Series(results_list, index=gdf.index)
         self.std = pd.Series(results_list_sd, index=gdf.index)
+
+        
+def get_network_ratio(df, edges, initial_buffer=500):
+    """
+    Link polygons to network edges based on the proportion of overlap (if a cell
+    intersects more than one edge)
+
+    Useful if you need to link enclosed tessellation to street network. Ratios can
+    be used as weights when linking network-based values to cells. For a purely
+    distance-based link use :func:`momepy.get_network_id`.
+
+    Links are based on the integer position of edge (``iloc``).
+
+    Parameters
+    ----------
+
+    df : GeoDataFrame
+        GeoDataFrame containing objects to snap (typically enclosed tessellation)
+    edges : GeoDataFrame
+        GeoDataFrame containing street network
+    initial_buffer : float
+        Initial buffer used to link non-intersecting cells.
+
+    Returns
+    -------
+
+    DataFrame
+
+    See also
+    --------
+    momepy.get_network_id
+    momepy.get_node_id
+
+    Examples
+    --------
+    >>> links = mm.get_network_ratio(enclosed_tessellation, streets)
+    >>> links.head()
+      edgeID_keys                              edgeID_values
+    0        [34]                                      [1.0]
+    1     [0, 34]  [0.38508998545027145, 0.6149100145497285]
+    2        [32]                                        [1]
+    3         [0]                                      [1.0]
+    4        [26]                                        [1]
+
+    """
+
+    # intersection-based join
+    buff = edges.buffer(0.01)  # to avoid floating point error
+    inp, res = buff.sindex.query_bulk(df.geometry, predicate="intersects")
+    intersections = (
+        df.iloc[inp]
+        .reset_index(drop=True)
+        .intersection(buff.iloc[res].reset_index(drop=True))
+    )
+    mask = intersections.area > 0.0001
+    intersections = intersections[mask]
+    inp = inp[mask]
+    lengths = intersections.area
+    grouped = lengths.groupby(inp)
+    totals = grouped.sum()
+    ints_vect = []
+    for name, group in grouped:
+        ratios = group / totals.loc[name]
+        ints_vect.append({res[item[0]]: item[1] for item in ratios.iteritems()})
+
+    edge_dicts = pd.Series(ints_vect, index=totals.index)
+
+    # nearest neighbor join
+    nans = df.index.difference(edge_dicts.index)
+    buffered = df.iloc[nans].buffer(initial_buffer)
+    additional = []
+    for orig, geom in zip(df.iloc[nans].geometry, buffered.geometry):
+        query = edges.sindex.query(geom, predicate="intersects")
+        b = initial_buffer
+        while query.size == 0:
+            query = edges.sindex.query(geom.buffer(b), predicate="intersects")
+            b += initial_buffer
+        additional.append({edges.iloc[query].distance(orig).idxmin(): 1})
+
+    additional = pd.Series(additional, index=nans)
+    ratios = pd.concat([edge_dicts, additional]).sort_index()
+    result = pd.DataFrame()
+    result["edgeID_keys"] = ratios.apply(lambda d: list(d.keys()))
+    result["edgeID_values"] = ratios.apply(lambda d: list(d.values()))
+    result.index = df.index
+    return result
