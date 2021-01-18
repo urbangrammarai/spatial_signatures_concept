@@ -1,0 +1,73 @@
+% Form
+\subsection{Form}
+\label{sec:lit_form}
+%% Form as a container
+% - backup the idea of form as a container (lit)
+% TODO: introduction of the section linking it back to the previous one
+
+%% Overview of attempts to describe form (time-based?, focus mostly on quant approaches)
+% - the focus on the description of form is old but just recently becoming data driven
+% - origins are in geography (Conzen and older) and architecture (Italians)
+% - first data-driven attempts
+% -- mention both morphometrics and remote sensing in parallel
+% -- Hillier, Porta, Batty
+% -- RS folks (land cover, urban/non-urban)
+Urban form approaches environments from the perspective of their physical structure and appearance.
+Research studying urban form has a long tradition, dating back to the early
+XXth Century \citep{geddes1915cities,
+trewartha1934japanese}. Urban morphology, subsequently, begun in the 1960s as an independent area of
+research. The field originated in parallel within
+geography \citep{conzen1960alnwick} and architecture
+\citep{muratori1959studi}, reflecting its inherently multi-disciplinary
+nature, later reinforced by the inclusion of socio-economic
+elements, as in the work work of \cite{panerai1997formes}. The original methods are
+predominantly qualitative, a tendency that persists today \citep{dibble2016urban}.
+The first notable quantitative approaches date to the late 1980s and 1990s,
+reflecting advancements in computation and newly available data capturing the
+built environment. In this context, two strains of research have emerged. One
+focuses on cartographic (vector) representation of the urban environment, assessing its
+boundaries \citep{batty1987}, street networks \citep{hillier1996, porta2006}
+and other elements \citep{pivo1993taxonomy}. The second one is based on earth
+observation, exploiting remotely sensed data to capture change in the
+footprint of urban areas \citep{howarth1983landsat}, or producing
+classifications of land cover \citep{europeanenvironmentagency1990}. 
+
+% - state of art
+% -- overview of work in both umm and rs (data availability and ML as enablers)
+% --- umm (Gil, Schirmer, Araldi, Berghauser Pont, Dibble) - focus on pure morphology
+The current state of the art still retains this distinction between
+cartographic and remotely sensed approaches. A modern quantitative branch of urban morphology,
+or urban morphometrics, has emerged working predominantly discrete elements of
+urban form, and proposing an abundant selection of
+measurable characters that describe different aspects of form
+\citep{fleischmann2020measuring}. As part of this trend, methods focusing on a single aspect
+\citep{porta2006} have been replaced by efforts to better reflect the
+complexity of urban form through the combination of multiple morphometric characters into a
+single model, often leading to data-driven typologies \citep{song2007}.
+This focus on classification is becoming more prominent, fueled by the
+possibilities afforded by new datasets increasingly available. Indeed, the
+literature is now able to produce typologies that start
+from small-scale studies focused on blocks and streets \citep{gil2012}, and
+zoom out into larger areas with higher granularity \citep{schirmer2015, araldi2019,
+bobkova2019, dibble2019origin, jochem2020}.
+
+% --- RS (Taubenbock, Jochem, Kuffer, LCZ, UST) - needs a bit of work to get relevant literature
+Advancements in remote sensing have also led to a range of classification
+frameworks based on various conceptualizations of the urban fabric. However,
+there is one significant difference between classification derived via
+morphometric characterization and the one based on remote sensing. Where the
+former is mostly unsupervised \citep{araldi2019, schirmer2015}, exploiting the
+hidden structure in the data to develop organically the typology; the latter
+tends towards supervised techniques, relying on classes defined a priori
+\citep{ pauleit2000assessing}. Two emerging classification
+models used to inform these exercises are Local Climate Zones
+\citep{stewart2012}, defining ten built-form types and seven land cover types,
+and used recently by \cite{koc2017mapping} or \cite{taubenbock2020}; and the Urban Structural
+Type, a generic typology based on the notion of internal homogeneity of types
+\citep{lehner2019}. 
+
+% --- The ways of measuring UF (link to EPB)
+% --- touch on scale issue
+% QST: how detailed we want to have this? We may omit this.
+
+
