@@ -4,23 +4,95 @@
 % when talking about BCN mention
 % https://www.researchgate.net/publication/254457523_Urban_form_and_compactness_of_morphological_homogeneous_districts_in_Barcelona_towards_an_automatic_classification_of_similar_built-up_structures_in_the_city#
 
-% all technical details in to an appendix
-% tables from excel should go to notebooks
+% all technical details in to an appendix tables from excel should go to
+% notebooks
 
-%%%%%%%%%%%% Structure
-% 4.1 (squeeze it in a page)
-% introduction of cases - 1 per continent; geographical variation, take
-% different cities, cultures, historical moments
+%%%%%%%%%%%% Structure 4.1 (squeeze it in a page) introduction of cases - 1 per
+% continent; geographical variation, take different cities, cultures, historical
+% moments
 
-%% method - top level outline of the method. Data, Form + convolution, Function, Clustering
-% One para on how to build the data - F+F+Convolution, how it varies across
-% examples (link to App.)
+% spatial signature is a conceptual framework which can materialize in different
+% ways
+The classification of built form into spatial signatures is a conceptual
+framework for characterisation of the built environment and as such, can
+materialise in different ways based on the particular implementation of a
+description of both form and function as well as the clustering method.
+% here we present it applied to five cases from around the world
+Here we present the concept applied to five case studies, reflecting different
+environments to be classified and heterogeneous input data requiring the
+adaptation of the classification to individual situations.
+% the sample comes with geographical variation - 1, 2, 3, 4, 5
+The sample offers a geographical variation covering Europe (Barcelona, Spain),
+North America (Houston, TX, United States), South America (Medellin, Colombia),
+Africa (Dar es Salaam, Tanzania) and South-east Asia (Singapore),
+% that brings different culture, development, planning paradigm, historical and
+% social contexts
+coupled with cultural diversity, different planning paradigms involved in
+shaping the respective environments as well as varied historical and social
+contexts in which the selected cities were built.
+% at the same time, it brings different input data, varied in both quality and
+% richness
+At the same time, the selection brings a variety of input data covering both
+extremes in terms of quality (e.g., official mapping in Barcelona vs remote
+sensing in Houston), the richness of information on functional aspects of places
+(e.g., detailed data on the municipal level in Medellin vs global gridded
+datasets in Dar es Salaam) and scale (82,375 units in Barcelona vs 2,043,581 units in
+Houston).
+% we present this variety to illustrate the application and flexibility of the
+% concept
+We present this variety to illustrate the flexibility of spatial signatures to
+accommodate varied inputs and adapt to a local specificity, while retaining the
+merit of the concept.
+
+%% method - top level outline of the method. Data, Form + convolution, Function,
+% Clustering One para on how to build the data - F+F+Convolution, how it varies
+% across examples (link to App.)
+
+%%% shall we add conceptual diagram of the method?
+
+% 1. data retrieval from open sources
+The delineation of spatial signatures starts with the input data reflecting form
+and function of each place. The form is represented by building footprints and
+physical barriers denoting streets, railways, and water bodies.
+% 2. geographies - enclosures, enclosed tessellation
+Using barriers, we first identify the geometry of enclosures to determine the
+external boundaries of consequently generated enclosed tessellation.
+% 3. characterization of form - primary + convolutions
+Such an information is rich enough for a comprehensive morphometric analysis
+composed of primary measurable characters, capturing individual aspects of form,
+and contextualisation. We measure first, second, and third quartile of each
+character's distribution within 10th order of contiguity on enclosed
+tessellation weighted by inverse distance for each enclosed cell. Such adaptive
+topological aggregation reflects the notion of context around each cell and
+describes each character's tendencies within it.
+% 4. characterization of function
+Function is captured as a heterogenous set of datasets relfecting aspects from
+population to location of points of interest. All aspects are linked to enclosed
+cells using the most appropriate method for each data input (e.g., areal
+interpolation or network accessibility).\footnote{See the technical appendix for
+details on the implementation.}
 
 % Second para on how we generate signatures (clustering); once we have those we
 % dissolve.
 
-% 4.2 (a page and a half)
-% Results; tell some stories to get reader on board
+% 5. cluster analysis input (all linked to cell)
+Spatial signatures are then identified using cluster analysis combined with the
+notion of contiguity, where each contiguous portion of land belonging to a
+single cluster is seen as a single signature.
+% 6. clustergram
+The combined data reflecting both form and function are therefore standardized
+and clustered using K-Means clustering. Since the number of classes is not known
+a priori, we use clustergram (schonlau) to understand clustering behaviour
+within different options and select the optimal number according to its
+structure.
+% 7. clustering
+The final clustering is run with 1000 initializations to ensure the stability of
+the results.
+% 8. dissolution
+The geometry of each spatial signature is then derived as dissolution of a
+contiguous patch of enclosed tessellation within the same cluster.
+
+% 4.2 (a page and a half) Results; tell some stories to get reader on board
 
 % how to read the map in an applied way
 
