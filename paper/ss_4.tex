@@ -15,12 +15,13 @@
 % spatial signature is a conceptual framework which can materialise in different
 % ways
 The classification of built form into spatial signatures is a conceptual
-framework for characterisation of the built environment and as such, can
-materialise in different ways based on the particular implementation of a
-description of both form and function as well as the clustering method.
+framework and as such, can
+materialise in different ways depending on the particular implementation of a
+description of both form and function and the method of aggregation of
+enclosed cells into singatures.
 % here we present it applied to five cases from around the world
 Here we present the concept applied to five case studies, reflecting different
-environments to be classified and heterogeneous input data requiring the
+environments and heterogeneous input data requiring the
 adaptation of the classification to individual situations.
 % the sample comes with geographical variation - 1, 2, 3, 4, 5
 The sample offers a geographical variation covering Europe (Barcelona, Spain),
@@ -53,33 +54,34 @@ merit of the concept.
 
 % 1. data retrieval from open sources
 The delineation of spatial signatures starts with the input data reflecting form
-and function of each place. The form is represented by building footprints and
+and function of each place. We use enclosed tessellation, outlined in the
+\hyperref[sec:ssec:ss_et]{section 3.2}, as a basic spatial unit. Therefore, the
+input data should consist of building footprints and
 physical barriers denoting streets, railways, and water bodies.
 % 2. geographies - enclosures, enclosed tessellation
 Using barriers, we first identify the geometry of enclosures to determine the
 external boundaries of consequently generated enclosed tessellation.
 % 3. characterization of form - primary + convolutions
-Such information is rich enough for a comprehensive morphometric analysis
+Resulting set of geometric data is rich enough for a comprehensive morphometric analysis
 composed of primary measurable characters, capturing individual aspects of form,
 and contextualisation, following the model proposed by Fleischmann et al. (2021)
 (ADD REF).
-We measure first, second, and third quartile of each
-character's distribution within 10th order of contiguity on enclosed
-tessellation weighted by inverse distance for each enclosed cell. Such adaptive
-topological aggregation reflects the notion of context around each cell and
-describes each character's tendencies within it.
+In the contextualisation step, we measure the tendencies of the distribution of
+each character within the neighbouring context of each tessellation cell.
 % 4. characterisation of function
-Function is captured as a heterogenous set of datasets relfecting aspects from
+Function is captured as a heterogeneous set of datasets reflecting aspects from
 population to location of points of interest. All aspects are linked to enclosed
 cells using the most appropriate method for each data input (e.g., areal
 interpolation or network accessibility).\footnote{See the technical appendix for
-details on the implementation.}
+details on the implementation.} The complete list of used characters relfecting
+both form and function is available as an appendix XXX.
 
 % Second para on how we generate signatures (clustering); once we have those we
 % dissolve.
 
 % 5. cluster analysis input (all linked to cell)
-Spatial signatures are then identified using cluster analysis combined with the
+Spatial signatures are then identified using cluster analysis of tessellation
+cells based on their form-function characteristics, combined with the
 notion of contiguity, where each contiguous portion of land belonging to a
 single cluster is seen as a single signature.
 % 6. clustergram
@@ -111,7 +113,7 @@ with colour coding reflecting the type of a signature, i.e. the initial cluster.
 areas within the same type are expected to share the characteristics of built
 environment, being more similar (not necessarily the same) to each other than to
 the rest of the classes. Note that the similarity of different colours does not
-encode similarity of signatures. Note that due to varied extent of case studies,
+encode similarity of signatures. Also note, that due to varied extent of case studies,
 maps are not printed at the same scale.
 
 %%% Para2 things which are shared/consistent
