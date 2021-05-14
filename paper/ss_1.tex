@@ -53,7 +53,7 @@ The study of urban form and function is deeply fragmented.
 %% fragmentation (academia/policy, disciplines)
 Work focusing on the form and function of cities is scattered across
 different academic disciplines and policy-making scenes. This is not
-necessarily a problem in itself, since different pespectives and backgrounds
+necessarily a problem in itself, since different backgrounds
 provide a richer picture. And there is much to be gained from a plurality of
 perspectives.
 %
@@ -61,8 +61,8 @@ It does however mean that the evidence available presents different
 interests as well as varying degrees of detail, consistency, and coverage.
 % Academia
 It is understandable that economists develop conceptualisations shaped around
-economic theories, while geographers do so paying attention to different
-dimensions, and yet other disciplines bring different aspects to focus.
+economic theories, while geographers do so paying attention to spatial scales,
+and yet other disciplines bring different aspects to focus.
 % Policy
 Similarly, decision makers interested in understanding aspects of urban form
 and function tend to see it through the lenses provided by the vantage point
@@ -92,38 +92,98 @@ even of gas emisions, we require a large extent to set up meaningful
 comparisons.
 
 % What we currently have
-Of detail, consistency and scale, the current landscape described above
-provides, at best, any pair.
+Of detail, consistency and scale, the current research landscape described above
+provides, at best, any two.
 %
 There is an abundance of detailed studies that consistently measure form and
 function, but these are in their majority confined to case studies with very
 limited geographical extents.
 %
-On the other end of the scale spectrum, recents years have seen the appearance
+On the other end of the scale spectrum, recent years have seen the appearance
 of work at global scale that is consistent. However their degree of detail
 tends to be hindered by data limitations.
 %
 Finally, one could understand the multitude of detailed case studies in
 conjunction as a growing body of evidence that is able to reach a sizeable
-scale. But, in these case, the fragmentation discussed earlier often prevents
-meaningful comparisons.
+scale. But, in these case, the fragmentation discussed earlier often
+translates in a lack of consistency that prevents meaningful comparisons.
 
 % Opportunities
+These limitations are beginning to be overcome thanks to
+recent advances on the data, technological and methodological fronts.
 %% data
-%% methodologies (morphometrics, GDS)
+New forms of data such as open cadastres, consumer datasets derived from
+modern business operations, or high resolution, public satelite imagery are
+greatly improving the descriptions we can build of cities
+\citep{arribas2014accidental}. Progressively, we are able to build denser and
+more up to date representations of urban environments at cheaper cost.
 %% technology
+Technological developments such as the dramatic increase of computational
+power available to researchers, or improvements in computer algorithms and machine
+learning are lowering the entry barrier to advances that only a few years ago
+required high degree of dedicated expertise to be able to benefit from.
+%% methodologies (morphometrics, GDS)
+Perhaps more importantly, recent methodological contributions such as
+morphometrics \citep{dibble2016urban} or geographic data science
+\citep{singleton2021geographic} are paving the way to blend these advances
+with domain knowledge and urban theory, effectively enabling disciplines
+concerned with the form and function of cities to benefit from such
+developments.
 
 % Preview
+In this paper, we introduce the Spatial Signatures as a characterisation of
+space based on form and function designed to understand urban environments.
 %% What: form and function
+The Spatial Signatures are thus a delineation that divides geographical space
+based on its appearance (form) and how it is used (function).
 %% Benefits
-%%% interdisciplinary, all-encompassing, not universal though!
+%%% Data-driven, theory-informed
+As we develop further in the paper, they are data-driven but informed by
+a multiplicity of theoretical frameworks borrowed from disciplines such as
+architecture, geography, planning or economics.
+%%% Granular but scalable
+They are also granular because they rely on a purpose-built spatial unit --the
+enclosed tesselation-- that captures the fundamental building block of form
+and function, while remaining scalable since they leverage much of advances
+mentioned above to benefit from new data sources and technologies.
+%%% Flexible to repurpose (though not universal!)
+Finally, the notion of Spatial Signatures is flexible and easy to repurpose.
+It is not a classification of space as much as a way of thinking of
+classifying space based on form and function. Hence, it is an ideal candidate
+for deployment on a wide range of data landscapes and geographical regions, as
+we illustrate in Section \ref{sec:app}.
 
-% Academic relevance
-
-% Relevance for policy
+% Relevance
+The Spatial Signatures hold important potential both for urban academics and
+policy makers. 
+%% Academic
+From an academic point of view, they are relevant as a goal in themselves
+that allows us to better measure and study the spatial configuration of the
+building blocks that make up cities. But they also represent a platform on
+which other disciplines can build on to embed form and function on a variety
+of socio-environmental outcomes.
+%% Policy
+For policy makers, the Spatial Signatures provide a framework for detailed
+spatial understanding of the cities and territories their decisions affect.
+Because of the flexibility of the concept, they are useful both in the global
+north, where cities are constantly recast and retrofitted, as well as the
+global south, where most of new urbanisation is currently taking place.
+%
+In summary, the Spatial Signatures allow us to move forward in realising
+detailed, consistent, and scalable measurement of form and function in
+cities.
 
 % Remainder structure of the paper
-
+The remaining of the paper is structured as follows. Section \ref{sec:lit}
+reviews existing literatures on urban form and function, highlighting current
+gaps. Section \ref{sec:ss} details our proposal of Spatial Signatures,
+including how we define conceptualise them, the spatial unit we develop to
+measure them --the enclosed tessellation cell--, and the embedding of form and
+function into such unit. In Section \ref{sec:app}, we illustrate the
+flexibility of the Spatial Signatures by presenting an application to five
+rather different global cities. And we conclude in Section
+\ref{sec:conclusions} with some reflection about the value and potential of
+our approach.
 
 
 
@@ -131,20 +191,20 @@ meaningful comparisons.
 % Bits to make sure to mention
 %--------------------------------------------------
 
-- need for detailed, consistent and scalable evidence (pick two of those)
 
-- These needs relate to both developing world, where there is not data at all
-  and most of the changes; but also to the developed world where life is being
-  "recast" and cities continue to evolve (housing crisis, remote work, climate
-  change targets, technology, etc.)
 
-- Fragmented literature --> fragmented measurement --> fragmented evidence
-- Fragmentation hinders our understanding
+%+ These needs relate to both developing world, where there is not data at all
+%  and most of the changes; but also to the developed world where life is being
+%  "recast" and cities continue to evolve (housing crisis, remote work, climate
+%  change targets, technology, etc.)
 
-- SS are intellectually "all-ecompassing", get around fragmentation
-- SS are fine-grained, consistent
 
-- SS data-driven but theoretically informed; granular but scalable;and flexible enough to be adapted to a wide variety of applied contexts
+%+ SS are fine-grained, consistent
+%+ SS data-driven but theoretically informed; granular but scalable;and flexible enough to be adapted to a wide variety of applied contexts
+%x SS are intellectually "all-ecompassing", get around fragmentation
+%+ need for detailed, consistent and scalable evidence (pick two of those)
+%+ Fragmented literature --> fragmented measurement --> fragmented evidence
+%+ Fragmentation hinders our understanding
 
 
 \martin{Note: are we using capitalised Spatial Signatures or spatial signatures? It is inconsistent throughout the paper.}
