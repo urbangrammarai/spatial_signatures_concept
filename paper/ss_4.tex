@@ -6,10 +6,6 @@
 
 % all technical details in to an appendix tables from excel should go to notebooks
 
-\subsection{Method}
-%%%%%%%%%%%% Structure 4.1 (squeeze it in a page) introduction of cases - 1 per
-% continent; geographical variation, take different cities, cultures, historical moments
-
 % spatial signature is a conceptual framework which can materialise in different ways
 The classification of built form into spatial signatures is a conceptual framework and
 as such, can materialise in different ways depending on the particular implementation of
@@ -27,7 +23,7 @@ Salaam, Tanzania) and South-east Asia (Singapore),
 % contexts
 coupled with cultural diversity, different planning paradigms involved in shaping the
 respective environments as well as varied historical and social contexts in which the
-selected cities were built.
+selected cities were built (Figure \ref{fig:world_map}).
 % at the same time, it brings different input data, varied in both quality and richness
 At the same time, the selection brings a variety of input data covering both extremes in
 terms of quality (e.g., official mapping in Barcelona vs remote sensing in Houston), the
@@ -38,6 +34,19 @@ municipal level in Medellin vs global gridded datasets in Dar es Salaam) and sca
 We present this variety to illustrate the flexibility of spatial signatures to
 accommodate varied inputs and adapt to a local specificity, while retaining the merit of
 the concept.
+
+\begin{figure}
+    \includegraphics[width=0.75\linewidth, center]{figures/examples_map.pdf}
+    \caption{Selection of case studies covering geographical variation,
+    cultural diversity, different planning paradigms involved in shaping the
+    respective environments as well as varied historical and social contexts in which the
+    selected cities were built.}
+    \label{fig:world_map}
+\end{figure}
+
+\subsection{Method}
+%%%%%%%%%%%% Structure 4.1 (squeeze it in a page) introduction of cases - 1 per
+% continent; geographical variation, take different cities, cultures, historical moments
 
 %% method - top level outline of the method. Data, Form + convolution, Function,
 % Clustering One para on how to build the data - F+F+Convolution, how it varies across
@@ -95,7 +104,7 @@ patch of enclosed tessellation within the same cluster.
 
 %%% Para1 how to read the map in an applied way geometries reflect boundaries of spatial
 % signatures
-Figures XXX-YYY illustrate the resulting spatial signatures in the respective case
+Figures \ref{fig:maps1}-\ref{fig:maps2} illustrate the resulting spatial signatures in the respective case
 studies.\footnote{For intermediate steps (e.g. clustergram) please refer to the
 technical appendix.} The geometries reflect the spatial extent of individual signatures
 derived from the enclosed tessellation
@@ -107,6 +116,13 @@ environment, being more similar (not necessarily the same) to each other than to
 rest of the classes. Note that the similarity of different colours does not encode
 similarity of signatures. Also note, that due to varied extent of case studies, maps are
 not printed at the same scale.
+
+\begin{figure}
+    \includegraphics[width=\linewidth]{figures/maps1.png}
+    \caption{TEMPORARY MAP, NEED TO RE-RENDER TO HAVE ALL ELEMENTS AT THE SAME SIZE.
+    Resulting Spatial Signatures in the case of Barcelona (A), Medellin (B) and Singapore (C).}
+    \label{fig:maps1}
+\end{figure}
 
 %%% Para2 things which are shared/consistent 9-19 clusters, not dependent on the scale
 % but reflecting the heterogeneity of a place
@@ -132,7 +148,6 @@ urban than the previous. The only exception where this tendency is not so profou
 still present) is Singapore, which geographical extent limited to the defined area of
 the main island does not allow the full transition.
 
-
 %%% Para3 interesting stories from cases (BCN village centres, DeS slums) BCN reflects
 % its historical origin - pre-industrial core and village centes, later filled by
 % eixample, which has its homogenous core and areas blending into the existing fabric
@@ -152,6 +167,13 @@ city lies in the valley surrounded by steep slopes. While the central parts lie 
 relatively flat floor allowing paradigmatic planning and rigidness of the built
 environment, hillsides are becoming more vernacular leading to a sharp urban edge where
 the topography does not allow further development.
+
+\begin{figure}
+    \includegraphics[width=\linewidth]{figures/maps2.png}
+    \caption{TEMPORARY MAP, NEED TO RE-RENDER TO HAVE ALL ELEMENTS AT THE SAME SIZE.
+    Resulting Spatial Signatures in the case of Houston (A) and Dar es Salaam (B).}
+    \label{fig:maps2}
+\end{figure}
 
 % Dar es Salaam signatures capture different levels of formality, planned, semi-formal
 % to informal
