@@ -1,38 +1,63 @@
 \subsection{Embedding form and function into Spatial Signatures}
 \label{ssec:ss_ff}
 
+%
+This section covers how to develop Spatial Signatures once ET cells are
+delineated for an area of study.
 % - EC have to be described
-Enclosed tessellation cells take the role of a structural unit, which itself has a
-descriptive value reflecting configuration of the built environment, and a
-container, into which other morphometric and functional characters can be
-embedded.
+ET cells take the role of the structural unit.
+In themselves, they hold descriptive value in reflecting the configuration of
+the urban environment. They also operate as a container, into which other
+
+morphometric and functional characters can be embedded.
 % - its character is used to grow Signatures
 % - we aim to describe intrinsic character of each cell depending on itself and,
 % importantly, its context
-We aim to describe the intrinsic character of each cell depending on its own
-geometry and nature, and, importantly, its immediate spatial context.
+The next stage to develop Spatial Signatures is to build form and function
+characters on top of ET cells. With this, we aim to describe both the
+intrinsic traits of each cell depending on its own
+geometry and nature, but to also include features of its immediate spatial
+context.
 % - some descriptors relate to form
-The set of descriptors has to reflect both form and function to reflect the
-essence and definition of spatial signatures, leading to a heterogeneous
-selection of morphometric characters, capturing patterns of physical, built-up
-environment, and functional characters, reflecting demographics, proximity to
-points of interest, land use classification or historical importance.
-% - some descriptors relate to function
+To do this, we propose to collect a set of descriptors reflecting both form
+and function to capture the essence and definition of spatial signatures.
+%
+This process will lead to a heterogeneous
+mix of morphometric characters, capturing patterns of physical, built-up
+environment; and functional characters, reflecting demographics, amenities,
+land use classification or historical importance.
+%% - some descriptors relate to function
 % - all, no matter the intinal granularity are linked to EC
 % - direct descriptors - area etc.
 % - proximity
-The specific composition of descriptors is not set and should always react to
-local conditions in terms of both data availability (e.g. to capture morphometric characters
-requiring high granularity or known building height may not be possible) and
-the specificity of each place (e.g. you would not capture proximity to theatres in
-a rural case study where are none but you would in metropolitan areas). However,
-it should always aim to reflect the nature of the form and function of each
-place in an exhaustive way.
+It is not the role of this
+section to provide a comprehensive list of all characters, morphometric and
+functional, that would need to be derived. Such list will depend on the
+specific context in which a Spatial Signatures classification is being
+developed including, for example, data availability or nature of the
+geographical area being considered.
+%
+However, it should always aim to reflect the nature of the form and function
+of each place in as exhaustive a way as possible.
+
 % - interpolation
 % - joins
-The inherent spatial autocorrelation of data derived from mutually overlapping
-\textit{contexts} of each EC then allows a feasible aggregation of ECs into
-spatial signatures using cluster analysis, as K-Means, or Kohonen Self-organized
-Map \citep{kohonen1990self}, without explicit spatial contiguity constraint.
+Collecting characters at the ET cell level is only half the task to develop
+Spatial Signatures. Given the granularity and multi-dimensionality of the
+information at this stage, we need to combine it in a way that retains its
+
+core characteristics but is easier to parse through.
+%
+We propose a feasible aggregation of ET cells into
+spatial signatures using unsupervised learning. Again, it is not the role of
+this section to single out a technique, since many exist including K-Means,
+gaussian mixture models, or self-organizing maps \citep{kohonen1990self}, to
+name a few. We note there is no need to impose a spatial contiguity constraint
+as spatially contiguous clusters of cells in the same signature will emerge
+thanks to the inherent spatial autocorrelation of data derived from mutually
+overlapping \textit{contexts}.
+%
+These continuous groups of cells grouped in the same cluster is what we call
+instances of a spatial signature.
 % - each EC is characterizes by form and function of its immediate surroundings,
 % allowing a feasible aggregation of ECs to SS.
