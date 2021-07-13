@@ -1,0 +1,194 @@
+\documentclass[pdftex,letterpaper,11pt]{article}%
+\usepackage[export]{adjustbox}
+\usepackage{multirow}
+\usepackage[arabicsections]{dpugatex}
+%\usepackage{dpppl}
+%\usepackage{lscape}
+\usepackage{pdflscape}
+\usepackage{longtable}
+
+\usepackage{tikz}
+
+\usepackage[british]{babel}
+\usepackage{amssymb,amsmath,warpcol,url,ctable,multirow,caption,threeparttable,float,soul,gensymb}
+%\usepackage[noend]{algpseudocode}
+\makeatletter
+\def\BState{\State\hskip-\ALG@thistlm}
+\makeatother
+
+
+\usepackage{subcaption}
+
+
+\usepackage{xcolor,colortbl}%Per colorejar cel·les de les taules
+\definecolor{verylightgray}{gray}{0.90}
+\newcommand{\verylightgray}[1]{\cellcolor{verylightgray}#1}
+
+
+\usepackage{arydshln} %Per dashed lines
+\setlength\dashlinedash{1.5pt}
+\setlength\dashlinegap{2.5pt}
+\setlength\arrayrulewidth{0.8pt}
+
+\usepackage[utf8]{inputenc}
+\usepackage{eurosym}
+\usepackage{soul}
+\setstcolor{red} % Tatxat vermell pel text a eliminar!!!!
+\definecolor{lightgreen}{rgb}{0.564706,0.933333,0.564706}
+\newcommand{\miquel}[1]{{\sethlcolor{lightgreen} \hl{#1}} } % To highlight with light green Miquel's comments.
+\soulregister\citet7 % These \soulregister commands allow us to avoid problems between soul functions (\hl, \st, ...) and these other functions (\citet,\citep,\ref,\footnote, ...). Include more if it is necessary.
+\soulregister\citep7
+\soulregister\cite7
+\soulregister\ref7
+\soulregister\footnote7
+\soulregister\textit7
+\soulregister\textbf7
+\soulregister\textsc7
+\soulregister\`7 % for open accents.
+\soulregister\'7 % for closed accents.
+\soulregister\% 7 % for \%age symbol
+\usepackage{tabularx,tabulary}
+\usepackage[osf]{mathpazo} % Amb aquest paquet faig ús de la lletra Palatino, la que fan servir Puga, Duranton et al. Amb l'opció [osf] la numeració és "old fashion", però és incompatible amb un títol en negreta i small caps (desapareixen les small caps!). Per tant, per ara opto per NO aplicar aquesta opció.
+\usepackage[abs]{overpic}
+
+\usepackage{hyperref}
+\definecolor{darkblue}{rgb}{0.0,0.0,0.3}
+\hypersetup{colorlinks=true, breaklinks=true, citecolor= darkblue, linkcolor=blue, urlcolor=blue}
+
+\usepackage{chngcntr}
+
+\newcommand{\mc}[3]{\multicolumn{#1}{#2}{#3}}
+\newcommand{\mcc}[1]{\multicolumn{1}{c}{#1}}
+\newcommand{\mcb}[1]{\multicolumn{1}{c}{\bf #1}}
+
+\newcommand{\mr}[3]{\multirow{#1}{#2}{#3}} % Per fer Files múltiples (seguint el punt de vista de les columnes múltiples.
+\newcommand{\mg}[3]{\multicolumn{#1}{#2}{\verylightgray #3}} %Combino el color de les cel·les amb al command de les columnes múltiples.
+
+
+
+%\hypersetup{%
+ % pdftitle={Race and neighborhoods in the 21$^{\text{st}}$ century},%
+ % pdfauthor={Jorge De la Roca (NYU) , Ingrid Gould Ellen (NYU) and Katherine O'Regan (NYU)},%
+ % pdfkeywords={race segregation, discrimination}}
+%\pdfOpenFitWidth
+%\pdfShowBookmarks
+
+\onehalfspacing%
+%\doublespacing%
+
+\newenvironment{tablenote}[1]{\begin{list}{}{\vskip-5mm\relax
+\setlength{\leftmargin}{#1} \setlength{\rightmargin}{\leftmargin}}
+\item[]\footnotesize\vskip-7pt
+{\em Notes}:\space\ignorespaces}{\end{list}}
+
+\newcommand{\jdlradded}[1]{#1}
+\newcommand{\dpadded}[1]{#1}
+\newcommand{\jdlrdeleted}[1]{}
+\newcommand{\dpdeleted}[1]{}
+\newcommand{\jdlrcomment}[1]{}
+\newcommand{\dpcomment}[1]{}
+\newcommand{\comment}[1]{}
+\newcommand{\martin}[1]{{\color{blue} Martin: [{#1}]}}
+\newcommand{\dani}[1]{{\color{purple} Dani: [{#1}]}}
+
+\begin{document}
+\begin{titlepage}
+\vspace*{1ex}
+\begin{minipage}{\textwidth}
+\begin{center}%
+
+    {\textsb{\LARGE Spatial Signatures\\ \textit{Understanding (urban) spaces
+    through form and function}}}\\[4ex]%
+
+July 2021\vspace{1.5ex}
+%
+\end{center}
+%
+\begin{abstract}
+% Punchy intro
+        This paper presents the notion of spatial signatures as a
+        characterisation of space based on form and function designed to
+        understand urban environments.
+% Background - What
+How we spatially arrange the building blocks that make up a city matters. On
+the one hand, it encodes many aspects of the phenomena
+that created such an arrangement in the first place. On the other, once in
+place, this arrangement of urban form and function underpins many
+outcomes, from economic productivity to environmental sustainability.
+% Proposal - How
+Our approach unfolds in three main stages.
+%% ET
+First, we propose a new spatial unit --the Enclosed Tessellation (ET) cell-- to
+delineate space in a way that is exhaustive and matches the underlying
+processes at which urban form and function operate.
+%% Build F&F
+Second, we propose to attach a large variety of form and function-based
+characters to ET cells to describe each of these units.
+%% Clustering
+Third, to build spatial signatures, information on ET cells can be clustered
+using unsupervised learning techniques.
+%% Result
+This process results in a theory-informed, data-driven
+typology of space that follows form and function.
+% Illustration
+We illustrate this approach by applying it to a sample of five very different
+cities scattered across the world. Our results demonstrate the ability to
+successfully differentiate different parts of a city that were built at
+different points in time and under different technological regimes, but also
+highlight broader comparisons about the nature of urban fabric in different
+regions.
+% Benefits - Why
+Our contribution resides in leveraging modern data, technology and methods to propose a
+detailed, consistent and scalable methodology that characterises urban form and
+function.
+%
+The spatial signatures can be used across academic disciplines and by a variety of
+practitioners and policymakers supporting initiatives such as the Sustainable
+Development Goals.
+\end{abstract}
+%
+\vspace{1.5ex}
+%
+Key words: \hskip.25em Geographic Data Science, Urban Form, Urban Function\\
+%
+\vspace*{-1.5ex}
+%
+\end{minipage}
+\end{titlepage}
+
+% Section 1 - Intro
+\input{ss_1.tex}
+
+% Section 2 - FF
+\input{ss_2.tex}
+
+% Section 3 - SS
+\input{ss_3.tex}
+
+\input{ss_3a.tex}
+
+\input{ss_3b.tex}
+
+\input{ss_3c.tex}
+
+% Section 4 - Empirics
+\input{ss_4.tex}
+
+% Section 5 - Conclusion
+\input{ss_5.tex}
+
+\clearpage
+
+
+
+
+\bibliographystyle{apalike}
+\bibliography{refs}
+
+\clearpage
+
+\input{ss_appendix.tex}
+
+\clearpage
+
+\end{document}

@@ -1,0 +1,125 @@
+\documentclass[pdftex,letterpaper,11pt]{article}%
+\usepackage[export]{adjustbox}
+\usepackage{multirow}
+\usepackage[arabicsections]{dpugatex}
+%\usepackage{dpppl}
+%\usepackage{lscape}
+\usepackage{pdflscape}
+\usepackage{longtable}
+
+\usepackage{tikz}
+
+\usepackage[british]{babel}
+\usepackage{amssymb,amsmath,warpcol,url,ctable,multirow,caption,threeparttable,float,soul,gensymb}
+%\usepackage[noend]{algpseudocode}
+\makeatletter
+\def\BState{\State\hskip-\ALG@thistlm}
+\makeatother
+
+
+\usepackage{subcaption}
+
+
+\usepackage{xcolor,colortbl}%Per colorejar cel·les de les taules
+\definecolor{verylightgray}{gray}{0.90}
+\newcommand{\verylightgray}[1]{\cellcolor{verylightgray}#1}
+
+
+\usepackage{arydshln} %Per dashed lines
+\setlength\dashlinedash{1.5pt}
+\setlength\dashlinegap{2.5pt}
+\setlength\arrayrulewidth{0.8pt}
+
+\usepackage[utf8]{inputenc}
+\usepackage{eurosym}
+\usepackage{soul}
+\setstcolor{red} % Tatxat vermell pel text a eliminar!!!!
+\definecolor{lightgreen}{rgb}{0.564706,0.933333,0.564706}
+\newcommand{\miquel}[1]{{\sethlcolor{lightgreen} \hl{#1}} } % To highlight with light green Miquel's comments.
+\soulregister\citet7 % These \soulregister commands allow us to avoid problems between soul functions (\hl, \st, ...) and these other functions (\citet,\citep,\ref,\footnote, ...). Include more if it is necessary.
+\soulregister\citep7
+\soulregister\cite7
+\soulregister\ref7
+\soulregister\footnote7
+\soulregister\textit7
+\soulregister\textbf7
+\soulregister\textsc7
+\soulregister\`7 % for open accents.
+\soulregister\'7 % for closed accents.
+\soulregister\% 7 % for \%age symbol
+\usepackage{tabularx,tabulary}
+\usepackage[osf]{mathpazo} % Amb aquest paquet faig ús de la lletra Palatino, la que fan servir Puga, Duranton et al. Amb l'opció [osf] la numeració és "old fashion", però és incompatible amb un títol en negreta i small caps (desapareixen les small caps!). Per tant, per ara opto per NO aplicar aquesta opció.
+\usepackage[abs]{overpic}
+
+\usepackage{hyperref}
+\definecolor{darkblue}{rgb}{0.0,0.0,0.3}
+\hypersetup{colorlinks=true, breaklinks=true, citecolor= darkblue, linkcolor=blue, urlcolor=blue}
+
+\usepackage{chngcntr}
+
+\newcommand{\mc}[3]{\multicolumn{#1}{#2}{#3}}
+\newcommand{\mcc}[1]{\multicolumn{1}{c}{#1}}
+\newcommand{\mcb}[1]{\multicolumn{1}{c}{\bf #1}}
+
+\newcommand{\mr}[3]{\multirow{#1}{#2}{#3}} % Per fer Files múltiples (seguint el punt de vista de les columnes múltiples.
+\newcommand{\mg}[3]{\multicolumn{#1}{#2}{\verylightgray #3}} %Combino el color de les cel·les amb al command de les columnes múltiples.
+
+
+
+%\hypersetup{%
+ % pdftitle={Race and neighborhoods in the 21$^{\text{st}}$ century},%
+ % pdfauthor={Jorge De la Roca (NYU) , Ingrid Gould Ellen (NYU) and Katherine O'Regan (NYU)},%
+ % pdfkeywords={race segregation, discrimination}}
+%\pdfOpenFitWidth
+%\pdfShowBookmarks
+
+\onehalfspacing%
+%\doublespacing%
+
+\newenvironment{tablenote}[1]{\begin{list}{}{\vskip-5mm\relax
+\setlength{\leftmargin}{#1} \setlength{\rightmargin}{\leftmargin}}
+\item[]\footnotesize\vskip-7pt
+{\em Notes}:\space\ignorespaces}{\end{list}}
+
+\newcommand{\jdlradded}[1]{#1}
+\newcommand{\dpadded}[1]{#1}
+\newcommand{\jdlrdeleted}[1]{}
+\newcommand{\dpdeleted}[1]{}
+\newcommand{\jdlrcomment}[1]{}
+\newcommand{\dpcomment}[1]{}
+\newcommand{\comment}[1]{}
+\newcommand{\martin}[1]{{\color{blue} Martin: [{#1}]}}
+\newcommand{\dani}[1]{{\color{purple} Dani: [{#1}]}}
+
+\begin{document}
+\begin{titlepage}
+\vspace*{1ex}
+\begin{minipage}{\textwidth}
+\begin{center}%
+
+    {\textsb{\LARGE Spatial Signatures\\ \textit{Understanding (urban) spaces
+    through form and function}}}\\[4ex]%
+
+
+\Large\textbf{Daniel Arribas-Bel}\\[.5cm]
+
+Geographic Data Science Lab\\
+Department of Geography and Planning\\
+University of Liverpool\\[1cm]
+Roxby Building,\\ 74 Bedford St S,\\ Liverpool,\\ L69 7ZT,\\ United Kingdom\\[.5cm]
+E-mail: \url{D.Arribas-Bel@liverpool.ac.uk}\\ phone: +44 (0)151 795 9727\\ website: \url{http://darribas.org}.\\[1cm]
+
+
+\Large\textsb{Martin Fleischmann}\\[.5cm]
+
+Geographic Data Science Lab\\
+Department of Geography and Planning\\
+University of Liverpool\\[1cm]
+
+E-mail: \url{M.Fleischmann@liverpool.ac.uk}\\ website: \url{https://martinfleischmann.net/}
+
+%
+\end{center}
+\end{minipage}
+\end{titlepage}
+\end{document}

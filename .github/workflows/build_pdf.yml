@@ -14,13 +14,18 @@ jobs:
         uses: xu-cheng/latex-action@v2
         with:
           working_directory: paper
-          root_file: spatial_signatures.tex
+          root_file: |
+            spatial_signatures.tex
+            manuscript.tex
+            title_page.tex
 
       - name: Commit files
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add paper/spatial_signatures.pdf
+          git add paper/manuscript.pdf
+          git add paper/title_page.pdf
           git commit -m "Build PDF" -a --allow-empty
 
       - name: Push changes
