@@ -38,7 +38,94 @@ developed including, for example, data availability or nature of the
 geographical area being considered.
 %
 However, it should always aim to reflect the nature of the form and function
-of each place in as exhaustive a way as possible.
+of each place in as exhaustive a way as possible. Tables \ref{tab:bcn_form_excerpt} and \ref{tab:bcn_fn_excerpt}
+contain an excerpt from tables \ref{tab:form_bcn} and \ref{tab:fn_bcn} available in
+the supplementary material, to provide an illustration of the nature of characters in
+question. The criteria of characters' selection build on the principles explored by
+\cite{dibble2019origin} and \cite{fleischmann2021methodological}, following the rules
+proposed by \cite{sneath1973numerical}, that can be summarised as
+\emph{include as many characters present in literature as is feasible, while minimising potential collinearity
+and limiting redundancy of information}.
+
+% TODO: expand the types of character to be included
+
+\small
+\begin{longtable}{p{5cm}p{4cm}p{4cm}l}
+\caption{The excerpt of form characters used in the Barcelona case study. The implementation details are available
+in Jupyter notebooks available at <anonymised for peer-review>. The categorisation follows \cite{fleischmann2020measuring}.}
+\label{tab:bcn_form_excerpt} \\
+\toprule
+                               index &                         element &                    context &     category \\
+\midrule
+\endfirsthead
+
+\toprule
+                               index &                         element &                    context &     category \\
+\midrule
+\endhead
+\midrule
+\multicolumn{4}{r}{{Continued on next page}} \\
+\midrule
+\endfoot
+
+\bottomrule
+\endlastfoot
+\dots &                        \dots &                   \dots &    \dots \\
+                                area &                        building &                   building &    dimension \\
+                           perimeter &                        building &                   building &    dimension \\
+                circular compactness &                        building &                   building &        shape \\
+                          squareness &                        building &                   building &        shape \\
+                   solar orientation &                        building &                   building & distribution \\
+                    street alignment &                        building &                   building & distribution \\
+                 coverage area ratio &               tessellation cell &          tessellation cell &    intensity \\
+                            openness &                  street profile &             street segment & distribution \\
+                              degree &                     street node &         neighbouring nodes & distribution \\
+                  shared walls ratio &             adjacent buildings  &        adjacent buildings  & distribution \\
+                                area &                       enclosure &                  enclosure &    dimension \\
+                    local meshedness &                  street network &              nodes 5 steps & connectivity \\
+          local closeness centrality &                  street network &              nodes 5 steps & connectivity \\
+               perimeter wall length &             adjacent buildings  &           joined buildings &    dimension \\
+               \dots &                        \dots &                   \dots &    \dots \\
+\end{longtable}
+
+\begin{longtable}{p{5cm}p{3cm}p{5cm}}
+\caption{The excerpt of function characters and transfer methods used in the Barcelona case study. The implementation details are available
+in Jupyter notebooks available at <anonymised for peer-review>.}
+\label{tab:bcn_fn_excerpt} \\
+\toprule
+                                        character & input spatial unit &                                    transfer method \\
+\midrule
+\endfirsthead
+
+\toprule
+                                        character & input spatial unit &                                    transfer method \\
+\midrule
+\endhead
+\midrule
+\multicolumn{3}{r}{{Continued on next page}} \\
+\midrule
+\endfoot
+
+\bottomrule
+\endlastfoot
+\dots &                        \dots &                   \dots  \\
+
+                                        population &              block &                  Building-based Dasymetric mapping \\
+    number of other items that are not premises &              block &                                 Dasymetric mapping \\
+                                        land use &             parcel &                            Spatial join (centroid) \\
+                            number of dwellings &           building &                                     Attribute join \\
+                                            parks &             points & Accessibility  - distance to nearest / \# within 15min \\
+                                    restaurants &              point & Accessibility  - distance to nearest / \# within 15min \\
+                                            trees &             points &                               Spatial join (count) \\
+                                            NDVI &          raster 1m &                                        Zonal stats \\
+                                            \dots &                        \dots &                   \dots  \\
+
+\end{longtable}
+\normalsize
+
+
+% TODO: explain difference in number of characters and the impact on the result
+
 
 % - interpolation
 % - joins
