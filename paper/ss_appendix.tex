@@ -15,7 +15,8 @@ available on December 01, 2020.
 \small
 \begin{longtable}{p{5cm}p{4cm}p{4cm}l}
 \caption{The complete list of form characters used in the Barcelona case study. The implementation details are available
-in Jupyter notebooks available at <anonymised for peer-review>.}
+in Jupyter notebooks available at <anonymised for peer-review>.
+Characters are adapted to enclosed tessellation from \cite{fleischmann2021methodological}.}
 \label{tab:form_bcn} \\
 \toprule
                                    index &                         element &                    context &     category \\
@@ -143,7 +144,8 @@ The data for the Medellin case study has been retrieved from the GeoMedellin Ope
 
 \begin{longtable}{p{5cm}p{4cm}p{4cm}l}
 \caption{The complete list of form characters used in the Medellin case study. The implementation details are available
-in Jupyter notebooks available at <anonymised for peer-review>.}
+in Jupyter notebooks available at <anonymised for peer-review>.
+Characters are adapted to enclosed tessellation from \cite{fleischmann2021methodological}.}
 \label{tab:form_med} \\
 \toprule
                                 index &                         element &                    context &     category \\
@@ -264,7 +266,8 @@ versions available on December 18, 2020.
 
 \begin{longtable}{p{5cm}p{4cm}p{4cm}l}
     \caption{The complete list of form characters used in the Dar es Salaam case study. The implementation details are available
-    in Jupyter notebooks available at <anonymised for peer-review>.}
+    in Jupyter notebooks available at <anonymised for peer-review>.
+    Characters are adapted to enclosed tessellation from \cite{fleischmann2021methodological}.}
     \label{tab:form_des} \\
     \toprule
                                    index &                         element &                    context &     category \\
@@ -384,7 +387,8 @@ versions available on January 13, 2021.
 
 \begin{longtable}{p{5cm}p{4cm}p{4cm}l}
     \caption{The complete list of form characters used in the Houston case study. The implementation details are available
-    in Jupyter notebooks available at <anonymised for peer-review>.}
+    in Jupyter notebooks available at <anonymised for peer-review>.
+    Characters are adapted to enclosed tessellation from \cite{fleischmann2021methodological}.}
     \label{tab:form_hou} \\
     \toprule
                                    index &                         element &                    context &     category \\
@@ -501,7 +505,8 @@ versions available on February 1, 2021.
 
 \begin{longtable}{p{5cm}p{4cm}p{4cm}l}
     \caption{The complete list of form characters used in the Singapore case study. The implementation details are available
-    in Jupyter notebooks available at <anonymised for peer-review>.}
+    in Jupyter notebooks available at <anonymised for peer-review>.
+    Characters are adapted to enclosed tessellation from \cite{fleischmann2021methodological}.}
     \label{tab:form_sin} \\
     \toprule
                                    index &                         element &                    context &     category \\
@@ -615,14 +620,25 @@ monuments &   point &       Accessibility \\
 \subsection{Clustergrams}
 
 \begin{figure}
-    \includegraphics[width=\linewidth]{figures/clustergram_bcn.pdf}
-    \caption{Clustergram (truncated along the vertical axis) illustrating the behaviour of dataset in different clustering options. The optimal number of clusters derived using the clustergram is 16.}
+    \includegraphics[width=\linewidth]{figures/clustergram_bcn.png}
+    \caption{Clustergram (truncated along the vertical axis) illustrating the behaviour
+    of dataset in different clustering options. The result suggests two different solutions,
+    a (very) conservative one with 4 classes and the other with 16 classes. For the purpose of
+    spatial signatures, it is more suitable a solution with more classes providing more detailed
+    classification. Therefore, we select 16 classes.
+    }
     \label{fig:cgram_bcn}
 \end{figure}
 
 \begin{figure}
-    \includegraphics[width=\linewidth]{figures/clustergram_med.pdf}
-    \caption{Clustergram (truncated along the vertical axis) illustrating the behaviour of dataset in different clustering options. The optimal number of clusters derived using the clustergram is 19.}
+    \includegraphics[width=\linewidth]{figures/clustergram_med.png}
+    \caption{Clustergram (truncated along the vertical axis) illustrating the behaviour
+    of dataset in different clustering options. The result suggests 3 different
+    solutions, a (very) conservative one with 4 classes, middle option with 11 classes
+    and the detailed one with 19 classes. For the purpose of spatial signatures, it is
+    more suitable a solution with more classes providing more detailed classification.
+    Therefore, we select 19 classes.
+    }
     \label{fig:cgram_med}
 \end{figure}
 
@@ -633,13 +649,23 @@ monuments &   point &       Accessibility \\
 \end{figure}
 
 \begin{figure}
-    \includegraphics[width=\linewidth]{figures/clustergram_hou.pdf}
-    \caption{Clustergram (truncated along the vertical axis) illustrating the behaviour of dataset in different clustering options. The optimal number of clusters derived using the clustergram is 9.}
+    \includegraphics[width=\linewidth]{figures/clustergram_hou.png}
+    \caption{Clustergram (truncated along the vertical axis) illustrating the behaviour
+    of dataset in different clustering options. The result suggests 3 different
+    solutions, a (very) conservative one with 3 classes, middle option with 6 classes
+    and the detailed one with 10 classes. For the purpose of spatial signatures, it is
+    more suitable a solution with more classes providing more detailed classification.
+    Therefore, we select 10 classes.}
     \label{fig:cgram_hou}
 \end{figure}
 
 \begin{figure}
-    \includegraphics[width=\linewidth]{figures/clustergram_sin.pdf}
-    \caption{Clustergram (truncated along the vertical axis) illustrating the behaviour of dataset in different clustering options. The optimal number of clusters derived using the clustergram is 16.}
+    \includegraphics[width=\linewidth]{figures/clustergram_sin.png}
+    \caption{Clustergram (truncated along the vertical axis) illustrating the behaviour
+    of dataset in different clustering options. The result suggests 3 different
+    solutions, a (very) conservative one with 3 classes, middle option with 6 classes
+    and the detailed one with 12 classes. For the purpose of spatial signatures, it is
+    more suitable a solution with more classes providing more detailed classification.
+    Therefore, we select 12 classes.}
     \label{fig:cgram_sin}
 \end{figure}
