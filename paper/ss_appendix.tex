@@ -249,7 +249,7 @@ in Jupyter notebooks available at <anonymised for peer-review>.}
                 parks & polygons &                                Distance to nearest \\
 heritage large areas & polygons &                               Spatial join (boolean) \\
             land use & polygons &                                             tobler \\
-                pois &   points & Accessibility  - distance to nearest / \# within 15min \\
+              points of interest &   points & Accessibility  - distance to nearest / \# within 15min \\
         public spaces & polygons &             Accessibility  -  area within radius \\
             population &   raster &                                        Zonal stats \\
                 NDVI &   raster &                                        Zonal stats \\
@@ -673,4 +673,51 @@ monuments &   point &       Accessibility \\
     more suitable a solution with more classes providing more detailed classification.
     Therefore, we select 12 classes.}
     \label{fig:cgram_sin}
+\end{figure}
+
+\subsection{Summary values per cluster}
+
+\begin{figure}
+  \includegraphics[width=\linewidth]{figures/barcelona_means.png}
+  \caption{Mean values of characters per each cluster of the Barcelona case study.
+  Colour coding is row-normalised with blue colour indicating smaller while red indicating
+  higher values. For details on the measurements, see the accompanying Jupyter notebook.
+  }
+  \label{fig:means_bcn}
+\end{figure}
+
+\begin{figure}
+  \includegraphics[width=\linewidth]{figures/medellin_means.png}
+  \caption{Mean values of characters per each cluster of the Medellin case study.
+  Colour coding is row-normalised with blue colour indicating smaller while red indicating
+  higher values. For details on the measurements, see the accompanying Jupyter notebook.
+  }
+  \label{fig:means_med}
+\end{figure}
+
+\begin{figure}
+  \includegraphics[width=\linewidth]{figures/dar_es_salaam_means.png}
+  \caption{Mean values of characters per each cluster of the Dar es Salaam case study.
+  Colour coding is row-normalised with blue colour indicating smaller while red indicating
+  higher values. For details on the measurements, see the accompanying Jupyter notebook.
+  }
+  \label{fig:means_des}
+\end{figure}
+
+\begin{figure}
+  \includegraphics[width=\linewidth]{figures/houston_means.png}
+  \caption{Mean values of characters per each cluster of the Houston case study.
+  Colour coding is row-normalised with blue colour indicating smaller while red indicating
+  higher values. For details on the measurements, see the accompanying Jupyter notebook.
+  }
+  \label{fig:means_hou}
+\end{figure}
+
+\begin{figure}
+  \includegraphics[width=\linewidth]{figures/singapore_means.png}
+  \caption{Mean values of characters per each cluster of the Singapore case study.
+  Colour coding is row-normalised with blue colour indicating smaller while red indicating
+  higher values. For details on the measurements, see the accompanying Jupyter notebook.
+  }
+  \label{fig:means_sin}
 \end{figure}
