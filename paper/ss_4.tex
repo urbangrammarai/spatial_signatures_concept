@@ -81,6 +81,13 @@ using the most appropriate method for each data input (e.g., areal
 network accessibility). The complete list of used characters relfecting both form and
 function, as well as implementation details are available in \ref{sec:appendix}.
 
+It is to be noted that each case study uses a different set of characters, depending on
+the local data landscape. While that would be an issue if we wanted to directly compare
+signatures identified in all case studies within a single analysis, it is not an issue
+within this paper. We are including geographically varied cases to illustrate the
+versatility of the method and its applicability in different contexts rather than
+developing a single classification covering all five cities.
+
 % Second para on how we generate signatures (clustering); once we have those we
 % dissolve.
 
@@ -92,6 +99,7 @@ The combined data reflecting both form and function are therefore standardised a
 clustered using K-Means. Since the number of classes is not known a priori,
 we use clustergrams \citep{schonlau2002clustergram} to understand the
 behaviour of different solutions and select the optimal number of groups.
+The optimal number is then selected based on the stability of cluster branching.
 \ref{sec:appendix} contains details on the clustergrams used.
 % 7. clustering
 The final clustering is run with 1000 initialisations to ensure stability of
@@ -115,13 +123,16 @@ derived from the enclosed tessellation
 with colour coding reflecting the type of a signature, i.e. the initial cluster. Two
 areas within the same type are expected to share form and function characteristics, being more similar to each other than to the
 other classes. Note that the similarity of different colours does not encode
-similarity of signatures.
+similarity of signatures. Figures \ref{fig:means_bcn}-\ref{fig:means_sin} show the numerical
+profile of each class as a mean value of each character.
 
 \begin{figure}
     \includegraphics[width=\linewidth]{figures/maps1.png}
     \caption{Resulting spatial signatures in the case of Barcelona (A), Singapore (B)
     and Medellin (C). Colours are used to distinguish between types within a
-    single case. Note scale differs across maps given the different extent
+    single case, there is no relation of colours across the case studies. Barcelona
+    case study illustrates possible interpretative naming of signatures.
+    Note scale differs across maps given the different extent
     covered by each urban area.}
     \label{fig:maps1}
 \end{figure}
@@ -180,7 +191,7 @@ topography limits further development.
 \begin{figure}
     \includegraphics[width=\linewidth]{figures/maps2.png}
     \caption{Resulting spatial signatures in the case of Dar es Salaam (A) and Houston (B).
-    Colours are used to distinguish between types within a single case.}
+    Colours are used to distinguish between types within a single case, there is no relation of colours across the case studies.}
     \label{fig:maps2}
 \end{figure}
 

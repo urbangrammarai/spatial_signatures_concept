@@ -3,11 +3,20 @@
 \label{sec:appendix}
 
 \subsection{The complete lists of used characters relfecting both form and function across case studies}
+\subsubsection{Barcelona}
+
+The data for the Barcelona case study has been retrieved from the Barcelona's City Hall
+Open Data Service Open Data BCN available at
+\href{https://opendata-ajuntament.barcelona.cat}{opendata-ajuntament.barcelona.cat},
+\href{https://osm.org}{OpenStreetMap}, and Spanish Cadastre available at
+\href{https://catastro.minhap.es}{catastro.minhap.es}. The data represents versions
+available on December 01, 2020.
 
 \small
 \begin{longtable}{p{5cm}p{4cm}p{4cm}l}
 \caption{The complete list of form characters used in the Barcelona case study. The implementation details are available
-in Jupyter notebooks available at <anonymised for peer-review>.}
+in Jupyter notebooks available at <anonymised for peer-review>.
+Characters are adapted to enclosed tessellation from \cite{fleischmann2021methodological}.}
 \label{tab:form_bcn} \\
 \toprule
                                    index &                         element &                    context &     category \\
@@ -124,9 +133,19 @@ in Jupyter notebooks available at <anonymised for peer-review>.}
                                               NDVI &          raster 1m &                                        Zonal stats \\
 \end{longtable}
 
+\subsubsection{Medellin}
+
+The data for the Medellin case study has been retrieved from the GeoMedellin Open Data
+ portal available at
+ \href{https://www.medellin.gov.co/geomedellin/}{medellin.gov.co/geomedellin/},
+ \href{https://osm.org}{OpenStreetMap}, WorldPop gridded population estimates
+ \citep{bondarenko2020census}, and a Sentinel 2 cloud-free composite
+ \citep{CORBANE2020105737}. The data represents versions available on January 05, 2021.
+
 \begin{longtable}{p{5cm}p{4cm}p{4cm}l}
-\caption{The complete list of form characters used in the BarceMedellinlona case study. The implementation details are available
-in Jupyter notebooks available at <anonymised for peer-review>.}
+\caption{The complete list of form characters used in the Medellin case study. The implementation details are available
+in Jupyter notebooks available at <anonymised for peer-review>.
+Characters are adapted to enclosed tessellation from \cite{fleischmann2021methodological}.}
 \label{tab:form_med} \\
 \toprule
                                 index &                         element &                    context &     category \\
@@ -230,16 +249,25 @@ in Jupyter notebooks available at <anonymised for peer-review>.}
                 parks & polygons &                                Distance to nearest \\
 heritage large areas & polygons &                               Spatial join (boolean) \\
             land use & polygons &                                             tobler \\
-                pois &   points & Accessibility  - distance to nearest / \# within 15min \\
+              points of interest &   points & Accessibility  - distance to nearest / \# within 15min \\
         public spaces & polygons &             Accessibility  -  area within radius \\
             population &   raster &                                        Zonal stats \\
                 NDVI &   raster &                                        Zonal stats \\
 \end{longtable}
 
+\subsubsection{Dar es Salaam}
+
+The data for the Dar es Salaam case study has been retrieved from
+\href{https://osm.org}{OpenStreetMap}, WorldPop gridded population estimates
+\citep{bondarenko2020census}, a Copernicus Global Land Cover
+\citep{marcel_buchhorn_2020_3939050}, VIIRS Night lights data (June 2020) \citep{elvidge2013viirs},
+and a Sentinel 2 cloud-free composite \citep{CORBANE2020105737}. The data represents
+versions available on December 18, 2020.
 
 \begin{longtable}{p{5cm}p{4cm}p{4cm}l}
     \caption{The complete list of form characters used in the Dar es Salaam case study. The implementation details are available
-    in Jupyter notebooks available at <anonymised for peer-review>.}
+    in Jupyter notebooks available at <anonymised for peer-review>.
+    Characters are adapted to enclosed tessellation from \cite{fleischmann2021methodological}.}
     \label{tab:form_des} \\
     \toprule
                                    index &                         element &                    context &     category \\
@@ -345,10 +373,22 @@ heritage large areas & polygons &                               Spatial join (bo
   night lights &      raster &     Zonal stats \\
 \end{longtable}
 
+\subsubsection{Houston}
+
+The data for the Houston case study has been retrieved from
+\href{https://osm.org}{OpenStreetMap}, Microsoft Building Footprints available from
+\href{https://www.microsoft.com/en-us/maps/building-footprints}{microsoft.com/en-us/maps/building-footprints},
+WorldPop gridded population estimates
+\citep{bondarenko2020census}, a Copernicus Global Land Cover
+\citep{marcel_buchhorn_2020_3939050}, VIIRS Night lights data (November 2019) \citep{elvidge2013viirs}, a Sentinel 2 cloud-free composite \citep{CORBANE2020105737}, and
+the Longitudinal Employer-Household Dynamics data from US Census 2011 available from
+\href{https://lehd.ces.census.gov/data/}{lehd.ces.census.gov/data/}. The data represents
+versions available on January 13, 2021.
 
 \begin{longtable}{p{5cm}p{4cm}p{4cm}l}
     \caption{The complete list of form characters used in the Houston case study. The implementation details are available
-    in Jupyter notebooks available at <anonymised for peer-review>.}
+    in Jupyter notebooks available at <anonymised for peer-review>.
+    Characters are adapted to enclosed tessellation from \cite{fleischmann2021methodological}.}
     \label{tab:form_hou} \\
     \toprule
                                    index &                         element &                    context &     category \\
@@ -454,10 +494,19 @@ heritage large areas & polygons &                               Spatial join (bo
 historical sites &        point &            Accessibility \\
 \end{longtable}
 
+\subsubsection{Singapore}
+The data for the Singapore case study has been retrieved from
+\href{https://osm.org}{OpenStreetMap}, Singapore Open data portal available at
+\href{https://data.gov.sg/}{data.gov.sg}, WorldPop gridded population estimates
+\citep{bondarenko2020census}, VIIRS Night lights data (November 2019) \citep{elvidge2013viirs},
+and a Sentinel 2 cloud-free composite \citep{CORBANE2020105737}. The data represents
+versions available on February 1, 2021.
+
 
 \begin{longtable}{p{5cm}p{4cm}p{4cm}l}
     \caption{The complete list of form characters used in the Singapore case study. The implementation details are available
-    in Jupyter notebooks available at <anonymised for peer-review>.}
+    in Jupyter notebooks available at <anonymised for peer-review>.
+    Characters are adapted to enclosed tessellation from \cite{fleischmann2021methodological}.}
     \label{tab:form_sin} \\
     \toprule
                                    index &                         element &                    context &     category \\
@@ -571,31 +620,104 @@ monuments &   point &       Accessibility \\
 \subsection{Clustergrams}
 
 \begin{figure}
-    \includegraphics[width=\linewidth]{figures/clustergram_bcn.pdf}
-    \caption{Clustergram (truncated along the vertical axis) illustrating the behaviour of dataset in different clustering options. The optimal number of clusters derived using the clustergram is 16.}
+    \includegraphics[width=\linewidth]{figures/clustergram_bcn.png}
+    \caption{Clustergram (truncated along the vertical axis) illustrating the behaviour
+    of dataset in different clustering options. The result suggests two different solutions,
+    a (very) conservative one with 4 classes and the other with 16 classes. For the purpose of
+    spatial signatures, it is more suitable a solution with more classes providing more detailed
+    classification. Therefore, we select 16 classes.
+    }
     \label{fig:cgram_bcn}
 \end{figure}
 
 \begin{figure}
-    \includegraphics[width=\linewidth]{figures/clustergram_med.pdf}
-    \caption{Clustergram (truncated along the vertical axis) illustrating the behaviour of dataset in different clustering options. The optimal number of clusters derived using the clustergram is 19.}
+    \includegraphics[width=\linewidth]{figures/clustergram_med.png}
+    \caption{Clustergram (truncated along the vertical axis) illustrating the behaviour
+    of dataset in different clustering options. The result suggests 3 different
+    solutions, a (very) conservative one with 4 classes, middle option with 11 classes
+    and the detailed one with 19 classes. For the purpose of spatial signatures, it is
+    more suitable a solution with more classes providing more detailed classification.
+    Therefore, we select 19 classes.
+    }
     \label{fig:cgram_med}
 \end{figure}
 
 \begin{figure}
-    \includegraphics[width=\linewidth]{figures/clustergram_des.pdf}
-    \caption{Clustergram (truncated along the vertical axis) illustrating the behaviour of dataset in different clustering options. The optimal number of clusters derived using the clustergram is 17.}
+    \includegraphics[width=\linewidth]{figures/clustergram_des.png}
+    \caption{Clustergram (truncated along the vertical axis) illustrating the behaviour
+    of dataset in different clustering options. The result suggests 3 different
+    solutions, a conservative one with 4 classes, middle option with 8 classes
+    and the detailed one with 16 classes. For the purpose of spatial signatures, it is
+    more suitable a solution with more classes providing more detailed classification.
+    Therefore, we select 16 classes.}
     \label{fig:cgram_des}
 \end{figure}
 
 \begin{figure}
-    \includegraphics[width=\linewidth]{figures/clustergram_hou.pdf}
-    \caption{Clustergram (truncated along the vertical axis) illustrating the behaviour of dataset in different clustering options. The optimal number of clusters derived using the clustergram is 9.}
+    \includegraphics[width=\linewidth]{figures/clustergram_hou.png}
+    \caption{Clustergram (truncated along the vertical axis) illustrating the behaviour
+    of dataset in different clustering options. The result suggests 3 different
+    solutions, a (very) conservative one with 3 classes, middle option with 6 classes
+    and the detailed one with 10 classes. For the purpose of spatial signatures, it is
+    more suitable a solution with more classes providing more detailed classification.
+    Therefore, we select 10 classes.}
     \label{fig:cgram_hou}
 \end{figure}
 
 \begin{figure}
-    \includegraphics[width=\linewidth]{figures/clustergram_sin.pdf}
-    \caption{Clustergram (truncated along the vertical axis) illustrating the behaviour of dataset in different clustering options. The optimal number of clusters derived using the clustergram is 16.}
+    \includegraphics[width=\linewidth]{figures/clustergram_sin.png}
+    \caption{Clustergram (truncated along the vertical axis) illustrating the behaviour
+    of dataset in different clustering options. The result suggests 3 different
+    solutions, a (very) conservative one with 3 classes, middle option with 6 classes
+    and the detailed one with 12 classes. For the purpose of spatial signatures, it is
+    more suitable a solution with more classes providing more detailed classification.
+    Therefore, we select 12 classes.}
     \label{fig:cgram_sin}
+\end{figure}
+
+\subsection{Summary values per cluster}
+
+\begin{figure}
+  \includegraphics[width=\linewidth]{figures/barcelona_means.png}
+  \caption{Mean values of characters per each cluster of the Barcelona case study.
+  Colour coding is row-normalised with blue colour indicating smaller while red indicating
+  higher values. For details on the measurements, see the accompanying Jupyter notebook.
+  }
+  \label{fig:means_bcn}
+\end{figure}
+
+\begin{figure}
+  \includegraphics[width=\linewidth]{figures/medellin_means.png}
+  \caption{Mean values of characters per each cluster of the Medellin case study.
+  Colour coding is row-normalised with blue colour indicating smaller while red indicating
+  higher values. For details on the measurements, see the accompanying Jupyter notebook.
+  }
+  \label{fig:means_med}
+\end{figure}
+
+\begin{figure}
+  \includegraphics[width=\linewidth]{figures/dar_es_salaam_means.png}
+  \caption{Mean values of characters per each cluster of the Dar es Salaam case study.
+  Colour coding is row-normalised with blue colour indicating smaller while red indicating
+  higher values. For details on the measurements, see the accompanying Jupyter notebook.
+  }
+  \label{fig:means_des}
+\end{figure}
+
+\begin{figure}
+  \includegraphics[width=\linewidth]{figures/houston_means.png}
+  \caption{Mean values of characters per each cluster of the Houston case study.
+  Colour coding is row-normalised with blue colour indicating smaller while red indicating
+  higher values. For details on the measurements, see the accompanying Jupyter notebook.
+  }
+  \label{fig:means_hou}
+\end{figure}
+
+\begin{figure}
+  \includegraphics[width=\linewidth]{figures/singapore_means.png}
+  \caption{Mean values of characters per each cluster of the Singapore case study.
+  Colour coding is row-normalised with blue colour indicating smaller while red indicating
+  higher values. For details on the measurements, see the accompanying Jupyter notebook.
+  }
+  \label{fig:means_sin}
 \end{figure}
