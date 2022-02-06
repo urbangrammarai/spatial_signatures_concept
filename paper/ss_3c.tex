@@ -2,8 +2,7 @@
 \label{ssec:ss_ff}
 
 %
-This section covers how to develop spatial signatures once ET cells are
-delineated for an area of study.
+This section covers the development of spatial signatures from a set of ET cells.
 % - EC have to be described
 ET cells take the role of the structural unit.
 In themselves, they hold descriptive value in reflecting the configuration of
@@ -12,53 +11,20 @@ morphometric and functional characters can be embedded.
 % - its character is used to grow Signatures
 % - we aim to describe intrinsic character of each cell depending on itself and,
 % importantly, its context
-The next stage to develop spatial signatures is to build form and function
-characters on top of ET cells. With this, we aim to describe both the
-intrinsic traits of each cell depending on its own
-geometry and nature, but to also include features of its immediate spatial
-context.
-% - some descriptors relate to form
-To do this, we propose to collect a set of descriptors reflecting both form
-and function to capture the essence and definition of spatial signatures.
+To "fill" these containers with more information,
+we propose to collect a set of descriptors reflecting both form
+and function so that, together, they capture an intertwined representation
+of both dimensions.
 %
-This process will lead to a heterogeneous
+In practice, this process will lead to a heterogeneous
 mix of morphometric characters, capturing patterns of physical, built-up
-environment; and functional characters, reflecting population, amenities,
-land use classification or historical importance. It is to be noted that
-every piece of information is considered within its spatial context.
-%% - some descriptors relate to function
-% - all, no matter the intinal granularity are linked to EC
-% - direct descriptors - area etc.
-% - proximity
-It is not the role of this
-section to provide a comprehensive list of all characters, morphometric and
-functional, that would need to be derived. Such list will depend on the
-specific context in which a spatial signatures classification is being
-developed including, for example, data availability or nature of the
-geographical area being considered.
-%
-However, it should always aim to reflect the nature of the form and function of each
-place in as exhaustive a way as possible. Tables \ref{tab:bcn_form_excerpt} and
-\ref{tab:bcn_fn_excerpt} contain an excerpt from tables \ref{tab:form_bcn} and
-\ref{tab:fn_bcn} available in the supplementary material, to provide an illustration of
-the nature of characters in question. The criteria of characters' selection build on the
-principles explored by \cite{dibble2019origin} and \cite{fleischmann2021methodological},
-following the rules proposed by \cite{sneath1973numerical}, that can be summarised as
-\emph{include as many characters present in literature as is feasible, while minimising
-potential collinearity and limiting redundancy of information}. That includes all
-categories of form characters identified by \cite{fleischmann2020measuring} (dimension,
-shape, spatial distribution, intensity, connectivity, diversity) and a wide range of
-functional characters available for the specific case study (see the table
-\ref{tab:bcn_fn_excerpt} and Supplementary material for details). It is to be noted that
-while the optimal ratio of form characters to function characters is 1:1, it may not be
-always possible due to the local data availability. However, it is not necessarily an
-issue as function is implicitly present in the description of form
-(\cite{caniggia2001architectural} in \cite{kropf2009aspects}).
+environment; and functional characters, reflecting economic activity, amenities,
+land use classification or historical importance.
 
-\small
+\begin{small}
 \begin{longtable}{p{5cm}p{4cm}p{4cm}l}
-\caption{The excerpt of form characters used in the Barcelona case study. The implementation details are available
-in Jupyter notebooks available at <anonymised for peer-review>. The categorisation follows \cite{fleischmann2020measuring}.}
+\caption{Excerpt of form characters used in the Barcelona case study. Implementation details are provided
+in Jupyter notebooks available at \texttt{<anonymised for peer-review>}. The categorisation follows \cite{fleischmann2020measuring}.}
 \label{tab:bcn_form_excerpt} \\
 \toprule
                                index &                         element &                    context &     category \\
@@ -93,10 +59,46 @@ in Jupyter notebooks available at <anonymised for peer-review>. The categorisati
                perimeter wall length &             adjacent buildings  &           joined buildings &    dimension \\
                \dots &                        \dots &                   \dots &    \dots \\
 \end{longtable}
+\end{small}
+
+ 
+Which exact characters to compile for a particular implementation of spatial signatures
+will depend on the availability of data in that context.
+Since this section outlines the process conceptually, we do not consider including any specific
+list as useful as providing broad guidance on the kind of characters that should 
+be aimed for when designing an application of the spatial signatures.
+Any selection in this respect should aspire to reflect the nature of form and function in the
+area of interest in as exhaustive a way as possible.
+% Form/function example
+As an example,
+Table \ref{tab:bcn_form_excerpt} (\ref{tab:bcn_fn_excerpt}) contains an excerpt of Table
+\ref{tab:form_bcn} (\ref{tab:fn_bcn}) in the supplementary
+material, which captures all of the form (function) characters we use in the Barcelona illustration of
+Section \ref{sec:app}.
+%
+We recommend building on the principles explored by \cite{dibble2019origin} and
+\cite{fleischmann2021methodological}, and following the rules originally proposed by
+\cite{sneath1973numerical}. These can be broadly summarised as
+\emph{include as many characters present in literature as is feasible, while minimising
+potential collinearity and limiting redundancy of information}. This guidance includes all
+categories of form characters identified by \cite{fleischmann2020measuring} (ie. dimension,
+shape, spatial distribution, intensity, connectivity, diversity) and as wide as possible of a range
+for functional characters available for a given case study, including land cover/use,
+employment/economic activity, and amenities. 
+%
+While the optimal ratio of form to function characters is to be aimed at balance, this may not
+always be possible. Form characters can be derived from a small set of data sources (eg.
+street networks and building footprints) while describing function relies on a larger set
+of data. We do not see this as a limitation of the spatial signatures as much as one
+of data availability. If anything, the joint approach of form and function encouraged
+by our proposal ameliorates the problem given the interrelations between form and function
+described above and that function has been found to be implicitly present in the description of form
+(\citealp{caniggia2001architectural} in \citealp{kropf2009aspects}).
 
 \begin{longtable}{p{5cm}p{3cm}p{5cm}}
-\caption{The excerpt of function characters and transfer methods used in the Barcelona case study. The implementation details are available
-in Jupyter notebooks available at <anonymised for peer-review>.}
+\caption{Excerpt of function characters and transfer methods used in the Barcelona case study.
+Implementation details are provided
+in Jupyter notebooks available at \texttt{<anonymised for peer-review>}.}
 \label{tab:bcn_fn_excerpt} \\
 \toprule
                                         character & input spatial unit &                                    transfer method \\
@@ -128,6 +130,16 @@ in Jupyter notebooks available at <anonymised for peer-review>.}
 
 \end{longtable}
 \normalsize
+
+                %%% Context %%%
+\dani{Martin add paragraph on how we use context and why here}
+In this step our proposal is to describe both the
+intrinsic traits of each cell, but to also incorporate features from the immediate
+spatial context.
+%
+It is to be noted that
+every piece of information is considered within its spatial context.
+%----------------------------------------------------------------------------------
 
 % - interpolation
 % - joins
