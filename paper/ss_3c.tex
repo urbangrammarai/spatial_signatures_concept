@@ -61,11 +61,11 @@ in Jupyter notebooks available at \texttt{<anonymised for peer-review>}. The cat
 \end{longtable}
 \end{small}
 
- 
+
 Which exact characters to compile for a particular implementation of spatial signatures
 will depend on the availability of data in that context.
 Since this section outlines the process conceptually, we do not consider including any specific
-list as useful as providing broad guidance on the kind of characters that should 
+list as useful as providing broad guidance on the kind of characters that should
 be aimed for when designing an application of the spatial signatures.
 Any selection in this respect should aspire to reflect the nature of form and function in the
 area of interest in as exhaustive a way as possible.
@@ -84,7 +84,7 @@ potential collinearity and limiting redundancy of information}. This guidance in
 categories of form characters identified by \cite{fleischmann2020measuring} (ie. dimension,
 shape, spatial distribution, intensity, connectivity, diversity) and as wide as possible of a range
 for functional characters available for a given case study, including land cover/use,
-employment/economic activity, and amenities. 
+employment/economic activity, and amenities.
 %
 While the optimal ratio of form to function characters is to be aimed at balance, this may not
 always be possible. Form characters can be derived from a small set of data sources (eg.
@@ -132,13 +132,16 @@ in Jupyter notebooks available at \texttt{<anonymised for peer-review>}.}
 \normalsize
 
                 %%% Context %%%
-\dani{Martin add paragraph on how we use context and why here}
-In this step our proposal is to describe both the
-intrinsic traits of each cell, but to also incorporate features from the immediate
-spatial context.
-%
-It is to be noted that
-every piece of information is considered within its spatial context.
+Since spatial signatures are capturing contiguous spatial patterns, characters need to
+be able to encode it. Therefore, instead of treating values measured on each ET cell
+independently, we also incorporate features from the immediate spatial \textit{context}
+defined as every ET cell within 10 topological steps on the ET mesh. Each of the ET
+cells within this limit is then weighted according to its metric distance from the
+original cell, ensuring that the cells that are closer are influencing the result more
+than those that are furhter away. The resulting weighted distribution of values is then
+used to sample three proxy variables - the first, the second and the third quartile,
+capturing the tendency of individual values in the area.
+
 %----------------------------------------------------------------------------------
 
 % - interpolation
