@@ -134,8 +134,10 @@ in Jupyter notebooks available at \texttt{<anonymised for peer-review>}.}
                 %%% Context %%%
 Since spatial signatures are capturing contiguous spatial patterns, characters need to
 be able to encode it. Therefore, instead of treating values measured on each ET cell
-independently, we also incorporate features from the immediate spatial \textit{context}
-defined as every ET cell within 10 topological steps on the ET mesh. Each of the ET
+independently, we also propose to incorporate features from the immediate spatial \textit{context}.
+
+Our preferred definition of context relies on ten topological steps from every ET cell. Each of the ET
+
 cells within this limit is then weighted according to its metric distance from the
 original cell, ensuring that the cells that are closer are influencing the result more
 than those that are furhter away. The resulting weighted distribution of values is then
