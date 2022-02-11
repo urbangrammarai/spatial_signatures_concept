@@ -135,14 +135,23 @@ in Jupyter notebooks available at \texttt{<anonymised for peer-review>}.}
 Since spatial signatures are capturing contiguous spatial patterns, characters need to
 be able to encode it. Therefore, instead of treating values measured on each ET cell
 independently, we also propose to incorporate features from the immediate spatial \textit{context}.
-
-Our preferred definition of context relies on ten topological steps from every ET cell. Each of the ET
-
+Our preferred definition of context relies on ten topological steps from every ET cell
+as illustrated on figure \ref{fig:context}). Each of the ET
 cells within this limit is then weighted according to its metric distance from the
 original cell, ensuring that the cells that are closer are influencing the result more
 than those that are furhter away. The resulting weighted distribution of values is then
 used to sample three proxy variables - the first, the second and the third quartile,
 capturing the tendency of individual values in the area.
+
+\begin{figure}
+\includegraphics[width=\linewidth]{figures/cell_context.png}
+\caption{Illustration of a definition of spatial context used to capture the
+distribution of values around each ET cell. For the yellow ET cell in the middle,
+we propose to define a neighbourhood of 10 topological steps on the tessellation and
+weight the importance of each cell within such an area by inverse distance between cell
+centroids.}
+\label{fig:context}
+\end{figure}
 
 %----------------------------------------------------------------------------------
 
