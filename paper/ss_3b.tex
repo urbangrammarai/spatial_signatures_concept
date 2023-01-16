@@ -9,7 +9,7 @@ Since spatial signatures are conceptualised as highly granular in space,
 considering the ideal unit of analysis at which to measure them is of utmost
 importance.
 %
-This step is worth spending enery and effort for two main reasons.
+This step is worth spending energy and effort for two main reasons.
 %% If improper --> MAUP big time
 First, if ignored, there is an important risk of incurring the modifiable areal
 unit problem (MAUP, \citealp{openshaw1981modifiable}). The urban fabric is not a
@@ -89,14 +89,23 @@ Administrative boundaries are exhaustive but rarely indivisable or consistent
 when it comes to urban form, usually grouping very different types of fabric
 within a single area.
 %
-Uniform grids are also exhaustive but, similarly to administrative definition,
-the arbitrariety of their delineation with respect to urban form usually leaves
-them divisable and internatlly inconsistent.
+Uniform grids are also exhaustive but
+the arbitrariety of their delineation with respect to urban form leaves
+them divisable and internally inconsistent. Even high resolution
+grids (i.e., very granular cells) might not be an ideal approach to capture
+the variability of urban form and function over space.\footnote{For example,
+areas with little variation in form and function, such as large parks or
+natural spaces, would be overrepresented in that it would take many cells to
+cover a single morpho-functional unit. At the same time, a single cell in
+areas with more intense variation of form and function, such as city centres,
+would aggregate more than one unit into a single cell. At the heart of this behaviour is the
+fact that uniform grids account for space in a directly proportional way to
+their area. This is not how form and function unfolds spatially.}
 %
-Morphometric units are the most theoretically appealing since they are built to
+Morphometric units are the most theoretically appealing ones since they are built to
 match the distribution of urban features and are usually granular enough to
 warrant internal consistency and indivisibility. Most of them are however not
-exhaustive as they are anchored to particular elements of the build environment,
+exhaustive as they are anchored to particular elements of the built environment,
 such as streets or building footprints, which do not provide full coverage.
 Plots would theoretically meet all characteristics but can be problematic due to
 their variable definition leading to different geometric representations
@@ -116,14 +125,15 @@ barriers identified from the literature on urban form, function and perception.
 \begin{figure}
 \includegraphics[width=\linewidth]{figures/et_diagram.pdf}
 \caption{Diagram illustrating the sequential steps leading to the delineation of
-enclosed tessellaion. From a series of enclosing components, where blue are streets and
+enclosed tessellation. From a series of enclosing components, where blue are streets and
 yellow river banks (A), to enclosures (shown as blue polygons) (B),
-incorporation of buildings as anchors (C) to final tessellation cells shown as red polygons (D).}
+incorporation of buildings as anchors (C) to final tessellation cells shown as individual red polygons (D).
+Note that the resulting tessellation covers entirety of space, including the enclosures with no buildings on them (as the river in this case).}
 \label{fig:et_diagram}
 \end{figure}
 
 %% Process of delineation:
-Let us unpack this concept a bit further. ECs result from the combination of
+Let us unpack this concept a bit further. ET cells result from the combination of
 three sequential steps (Figure \ref{fig:et_diagram}).
 %%% Gather all enclosing features (streets, rivers, railways, etc.)
 First, they rely on a set of enclosing components: features of the landscape
@@ -183,7 +193,7 @@ primary feature \citep{hamaina2012a, usui2013estimation, schirmer2015}.
 % [Build illustration in the description]
 
 % Why --> meets every requirement and extends the previous state-of-the-art
-The combination of delimiters and anchors as the parsers of space make ECs an
+The combination of delimiters and anchors as the parsers of space make ET cells an
 ideal spatial unit to study spatial signatures, one which
 meets the three requirements we outlined above.
 %
@@ -193,6 +203,10 @@ single anchor, and potentially none.
 They are also internally consistent because they are delineated as the area
 within the delimiters that contain at most one anchor.
 %
-And finally ECs are exhaustive in that every location within the area of
+And finally ET cells are exhaustive in that every location within the area of
 interest is assigned to one and only one EC, providing full geographical
 coverage without any overlap.
+%
+Due to space and focus constraints, we do not compare them empirically to
+competing alternatives such as administrative units or uniform grids, but we
+consider this endeavour a fruitful avenue for future research.

@@ -10,15 +10,18 @@ In this section, we present five different illustrations of how the concept of t
 signatures can be applied in a variety of scenarios, including a set of diverse
 backgrounds and data landscapes.
 %% spatial signature is a conceptual framework which can materialise in different ways
-We propose the spatial signatures as a way to understand urban form and function
-represent a conceptual framework.
+We propose the spatial signatures as a way to understand urban form and
+function, and they represent a conceptual framework that can be applied at
+scale while retaining detail.
 As such, any one application of this notion will materialise differently depending
 on the region of interest, details of the particular implementation (eg. clustering algorithm),
 and the nature of the data available.
 %
-Though not directly comparable (eg. the classes delineated may differ depending on unique 
+Though not directly comparable (eg. the classes delineated may differ depending on unique
 regional characteristics), we view the development of spatial signature classifications for
-different regions to then bring them into dialogue as a fruitful avenue of research.
+different regions as valuable. Indeed, the exploration of how to bring
+different classifications into dialogue to meaningfully extract similarities
+and differences of the urban systems they represent is a fruitful avenue of research.
 % here we present it applied to five cases from around the world
 This section thus \textit{illustrates} how the concept of
 spatial signatures can be operationalised in a variety of contexts.
@@ -135,7 +138,8 @@ with colour coding reflecting the type of a signature, i.e. the initial cluster.
 areas within the same type are expected to share form and function characteristics, being more similar to each other than to the
 other classes. Note that the similarity of different colours does not encode
 similarity of signatures. Figures \ref{fig:means_bcn}-\ref{fig:means_sin} show the numerical
-profile of each class as a mean value of each character.
+profile of each class as a mean value of each character and figures \ref{fig:counts_bcn}-\ref{fig:counts_sin}
+histograms of the cluster abundance.
 
 \begin{figure}
     \includegraphics[width=\linewidth]{figures/maps1.png}
@@ -179,13 +183,16 @@ the main island and thus does not allow for full transition.
 % its historical origin - pre-industrial core and village centes, later filled by
 % eixample, which has its homogenous core and areas blending into the existing fabric
 Barcelona is known for its extension grid (``Eixample''), which is captured as
-a unique signature (red).
+a unique signature we name \textit{Rigid planned grid}.
 However, this development is historically an infill between the city's medieval core and
 smaller preexisting peripheric settlements. Both core and periphery are
 reflected in the typology of signatures, which embody these historical
 origins. The spatial transition between historical organic fabric and the
-heavily planned
-Eixample is reflected as another signature (yellow), stitching together different patterns into a coherent city.
+heavily planned Eixample is reflected as another signature (\textit{Transitional grid}),
+stitching together different patterns into a coherent city. As shows on figure \ref{fig:means_bcn},
+both are defined by small areas of ET cells, higher number of courtyards or linearity of
+street segments. However, they differ in the proprtion of heritage, accessibility to cultural venues and parks or
+solar orientation of buildings (\textit{Transitional grid} is more variable in that sense).
 
 % Medellin's change of the pattern as we go up the hill from the central valley
 % - central plateu allows more rigid planning reflected in several classes, hillsides
